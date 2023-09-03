@@ -4,20 +4,24 @@
     <form>
 
       <mat-form-field style="width: 100%">
-        <input matInput type="email" placeholder="Courriel" name="email">
+        <input matInput type="username" placeholder="Nom d'utilisateur" name="username" [(ngModel)]="username">
       </mat-form-field>
 
       <mat-form-field style="width: 100%">
-        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Mot de passe" name="pass">
+        <input matInput type="email" placeholder="Courriel" name="email" [(ngModel)]="email">
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%">
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Mot de passe" name="pass" [(ngModel)]="password">
         <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
       <mat-form-field style="width: 100%">
-        <input matInput [type]="hideConfirmation ? 'password' : 'text'" placeholder="Confirmation du mot de passe" name="conf">
+        <input matInput [type]="hideConfirmation ? 'password' : 'text'" placeholder="Confirmation du mot de passe" name="conf" [(ngModel)]="passwordConfirm">
         <mat-icon matSuffix (click)="hideConfirmation = !hideConfirmation">{{hideConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 
-      <button mat-raised-button color="primary">Enregistrer</button>
+      <button mat-raised-button color="primary" (click)="register()" [routerLink]="['/login']">Enregistrer</button>
 
     </form>
   </mat-card>
