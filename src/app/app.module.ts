@@ -12,16 +12,18 @@ import { MatchComponent } from './match/match.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DeckComponent } from './deck/deck.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     LoginComponent,
     RegisterComponent,
     CardComponent,
     MatchComponent,
     HomeComponent,
-  ],
+      DeckComponent
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
