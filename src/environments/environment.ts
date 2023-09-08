@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: "https://placeholder.azurewebsites.net/"
+    apiUrl: "https://carteinfinieserveur.azurewebsites.net/"
 };
