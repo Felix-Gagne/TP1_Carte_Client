@@ -3,7 +3,7 @@ import { lastValueFrom } from 'rxjs';
 import { RegisterDTO } from '../Models/RegisterDTO';
 import { HttpClient } from '@angular/common/http';
 import { LoginDTO } from '../Models/LoginDTO';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
