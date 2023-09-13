@@ -21,9 +21,7 @@ export class UserServicesService {
       passwordConfirm
     );
 
-    let options = { withCredentials:true }
-
-    let x = await lastValueFrom(this.http.post<RegisterDTO>(environment.apiUrl+'api/User/Register', registerDTO, options));
+    let x = await lastValueFrom(this.http.post<RegisterDTO>(environment.apiUrl+'api/User/Register', registerDTO));
   }
 
   async login(username : string, password : string)
@@ -32,9 +30,7 @@ export class UserServicesService {
       username,
       password
     );
-
-    let options = { withCredentials : true }
     
-    let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO, options))
+    let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO))
   }
 }
