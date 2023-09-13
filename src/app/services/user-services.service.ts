@@ -22,6 +22,7 @@ export class UserServicesService {
     );
 
     let x = await lastValueFrom(this.http.post<RegisterDTO>(environment.apiUrl+'api/User/Register', registerDTO));
+    console.log(x);
   }
 
   async login(username : string, password : string)
@@ -31,6 +32,7 @@ export class UserServicesService {
       password
     );
     
-    let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO))
+    let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO));
+    console.log(x);
   }
 }

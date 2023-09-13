@@ -11,8 +11,9 @@ import { CardComponent } from './card/card.component';
 import { MatchComponent } from './match/match.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeckComponent } from './deck/deck.component';
+import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
 
 @NgModule({
   declarations: [	
@@ -32,7 +33,13 @@ import { DeckComponent } from './deck/deck.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CookieInterceptorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

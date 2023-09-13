@@ -13,6 +13,7 @@ export class CookieInterceptorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log("Intercepting!");
     request = request.clone({ withCredentials: true });
     return next.handle(request);
   }
