@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserServicesService } from 'src/app/services/user-services.service';
 
 @Component({
@@ -18,14 +18,20 @@ export class RegisterComponent implements OnInit {
   password : string = "";
   passwordConfirm = "";
 
-  constructor(public service : UserServicesService) { }
+  constructor(public service : UserServicesService, public router : Router) { }
 
   ngOnInit() {
     
   }
 
   async register(){
-    await this.service.register(this.username, this.email, this.password, this.passwordConfirm);
+    try{
+      await this.service.register(this.username, this.email, this.password, this.passwordConfirm);
+      this.router.navigate(['/login']);
+    }
+    catch(e){
+      console.log("Sa plante ici");
+    }
   }
 
 }

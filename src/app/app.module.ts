@@ -31,7 +31,7 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     AppRoutingModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {
