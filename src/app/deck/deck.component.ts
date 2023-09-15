@@ -1,4 +1,7 @@
+import { CardServiceService } from './../services/card-service.service';
+import { CardComponent } from './../card/card.component';
 import { Component, OnInit } from '@angular/core';
+import { CardDTO } from '../Models/CardDTO';
 
 @Component({
   selector: 'app-deck',
@@ -7,16 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeckComponent implements OnInit {
 
-  stickcard = {
-    name: "StickMan",
-    attack: 3,
-    defense: 5,
-    imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgYf_mZPa6loeLcatHmO1hzyHxB2MXHKVsFQ&usqp=CAU"
-  }
+  cardList : CardDTO[] = [];
 
-  constructor() { }
+  constructor(public cardServiceService: CardServiceService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.cardList = await this.cardServiceService.getdeck();
   }
 
 }
