@@ -5,6 +5,8 @@
 <button mat-raised-button [routerLink]="['/match']" color="accent">Board</button>
 <span style="margin-left: 10px;"></span>
 <button mat-raised-button [routerLink]="['/deck']" color="accent">Deck</button>
+<span style="margin-left: 50px;"></span>
+<button mat-raised-button [routerLink]="['/match']" color="accent" (click)="join()">Join a freaking game</button>
 <div style="display: flex; padding: 10px;">
   <app-card [attack]="catcard.attack" [defense]="catcard.defense" [imageUrl]="catcard.imageUrl" [health]="catcard.defense" [name]="catcard.name"></app-card>
   <span style="margin-left: 10px;"></span>
