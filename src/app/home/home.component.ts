@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserServicesService } from '../services/user-services.service';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { MatchServicesService } from '../services/match-services.service';
 import { Router, RouterModule } from '@angular/router';
 
