@@ -20,11 +20,41 @@ export class HomeComponent implements OnInit {
     imageUrl:"https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg"
   }
 
-  constructor(public service : UserServicesService, public http : HttpClient, public router : Router) { }
+  constructor(public userService : UserServicesService, public matchService : MatchServicesService, public http : HttpClient, public router : Router) { }
 
   ngOnInit() {
     
   }
 
+  async join()
+  {
+    this.isLoading = true;
+    
+    while (true)
+    {
+      const result = await this.matchService.joinMatch();
+
+      if (result !== null) {
+        this.isLoading = false;
+        this.router.navigate(['/match']);
+        break;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  }
+
   
+  async signOut(){
+    try{
+      await this.userService.signOut();
+      this.router.navigate(['/login']);
+    } catch(e){
+      console.log("Woops, une erreur c'est produite...");
+    }
+    
+  }
+    
+
+
 }
