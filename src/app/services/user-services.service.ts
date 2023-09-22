@@ -35,4 +35,9 @@ export class UserServicesService {
     let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO));
     console.log(x);
   }
+
+  async signout(){
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/SignOut', null));
+    console.log(x);
+  }
 }
