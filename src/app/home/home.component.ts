@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
       if (result !== null) {
         this.isLoading = false;
-        this.router.navigate(['/match']);
+        this.router.navigate(['/match', result.match.id]);
         break;
       }
 
