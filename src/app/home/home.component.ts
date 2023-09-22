@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserServicesService } from '../services/user-services.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatchServicesService } from '../services/match-services.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  isLoading : boolean = false;
 
   catcard = {
     name: "Chat Jedi",
@@ -23,16 +27,5 @@ export class HomeComponent implements OnInit {
     
   }
 
-
-  async signOut(){
-    try{
-      await this.service.signout();
-      this.router.navigate(['/login']);
-    } catch(e){
-      console.log("Woops, une erreur c'est produite...");
-    }
-    
-  }
-    
   
 }

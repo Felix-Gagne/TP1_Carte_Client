@@ -1,3 +1,23 @@
+<style>
+  .loading-screen {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .loading-icon {
+            font-size: 40px;
+            color: white;
+        }
+</style>
+
 <button mat-raised-button [routerLink]="['/login']" color="accent">Login</button>
 <span style="margin-left: 10px;"></span>
 <button mat-raised-button [routerLink]="['/register']" color="accent">Register</button>
@@ -7,10 +27,17 @@
 <button mat-raised-button [routerLink]="['/match']" color="accent">Board</button>
 <span style="margin-left: 10px;"></span>
 <button mat-raised-button [routerLink]="['/deck']" color="accent">Deck</button>
+<span style="margin-left: 50px;"></span>
+<button mat-raised-button color="accent" (click)="join()">Join a freaking game</button>
 <div style="display: flex; padding: 10px;">
   <app-card [attack]="catcard.attack" [defense]="catcard.defense" [imageUrl]="catcard.imageUrl" [health]="catcard.defense" [name]="catcard.name"></app-card>
   <span style="margin-left: 10px;"></span>
   <app-card [show]="'back'"></app-card>
+</div>
+
+<div class="loading-screen" *ngIf="isLoading">
+  <div class="loading-icon">Loading...</div>
+  <label for="showLoading" style="color: white; cursor: pointer;">Click to dismiss</label>
 </div>
 
 <span style="margin-left: 10px;"></span>
