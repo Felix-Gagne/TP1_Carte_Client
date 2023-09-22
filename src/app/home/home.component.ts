@@ -29,9 +29,11 @@ export class HomeComponent implements OnInit {
   async join()
   {
     this.isLoading = true;
-    
     while (true)
     {
+      if(!this.isLoading){
+        break;
+      }
       const result = await this.matchService.joinMatch();
 
       if (result !== null) {
@@ -55,6 +57,5 @@ export class HomeComponent implements OnInit {
     
   }
     
-
 
 }
