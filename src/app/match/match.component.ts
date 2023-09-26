@@ -26,18 +26,6 @@ export class MatchComponent implements OnInit {
       this.mycards.push(card);
       this.enemycards.push(card);
     }
-  
-
-    this.id = this.route.snapshot.paramMap.get('id')?.toString();
-    
-  
-  }
-
-  async startMatch() 
-  {
-    if(this.id != undefined){
-      const result = await this.service.startMatch(this.id);
-    }
   }
 
 }

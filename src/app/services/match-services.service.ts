@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MatchServicesService {
 
   constructor(public http : HttpClient) { }
@@ -17,9 +18,9 @@ export class MatchServicesService {
       return x;
     }
 
-    async startMatch(id : string)
+    async startMatch(matchId : number)
     {
-      let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + id, null));
+      let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + matchId, null));
       console.log(x);
     }
 

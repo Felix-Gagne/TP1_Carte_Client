@@ -34,10 +34,17 @@ export class HomeComponent implements OnInit {
       if(!this.isLoading){
         break;
       }
+
       const result = await this.matchService.joinMatch();
+      const userId = localStorage.getItem("userId");
 
       if (result !== null) {
         this.isLoading = false;
+
+        if(userId == result.playerB.identityUserId){
+          await this.matchService.startMatch(result.match.id);
+        }
+
         this.router.navigate(['/match', result.match.id]);
         break;
       }
