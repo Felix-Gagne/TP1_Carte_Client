@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatchServicesService } from '../services/match-services.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-match',
@@ -7,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service : MatchServicesService, public route : ActivatedRoute) { }
 
   mycards:any = [];
   enemycards:any = [];
+  id : string | undefined = "";
 
   ngOnInit() {
     let card = {
@@ -22,6 +25,18 @@ export class MatchComponent implements OnInit {
     for(let i=0; i<4; i++) {
       this.mycards.push(card);
       this.enemycards.push(card);
+    }
+  
+
+    this.id = this.route.snapshot.paramMap.get('id')?.toString();
+    
+  
+  }
+
+  async startMatch() 
+  {
+    if(this.id != undefined){
+      const result = await this.service.startMatch(this.id);
     }
   }
 

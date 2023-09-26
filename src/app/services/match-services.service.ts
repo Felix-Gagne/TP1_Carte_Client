@@ -17,4 +17,10 @@ export class MatchServicesService {
       return x;
     }
 
+    async startMatch(id : string)
+    {
+      let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + id, null));
+      console.log(x);
+    }
+
 }
