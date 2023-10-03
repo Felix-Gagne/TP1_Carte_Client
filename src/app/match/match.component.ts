@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatchServicesService } from '../services/match-services.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-const result = JSON.parse(localStorage.getItem("match") || '{}');
+const match = JSON.parse(localStorage.getItem("match") || '{}');
 
 @Component({
   selector: 'app-match',
@@ -11,13 +11,11 @@ const result = JSON.parse(localStorage.getItem("match") || '{}');
 })
 export class MatchComponent implements OnInit {
 
-  constructor(public service : MatchServicesService, public route : ActivatedRoute) { }
+  constructor(public service : MatchServicesService, public route : ActivatedRoute, public router : Router) { }
 
   mycards:any = [];
   enemycards:any = [];
-  userBId : string = "";
   currentUserId : string = "";
-  matchId : number = 0;
   playerId : number = 0;
 
   //Boolean pour activer les animations des events
@@ -52,15 +50,31 @@ export class MatchComponent implements OnInit {
   this.currentUserId = localStorage.getItem("userId")!;
 
   console.log(this.playerId);
-  console.log(result);
+  console.log(match);
 
   this.startMatch();
 
+
+  this.updateMatch();
   }
 
   async startMatch(){
-    if(this.currentUserId == this.userBId){
-          await this.service.startMatch(this.matchId);
+    console.log("current:"+ this.currentUserId + "\nuserbid : " + match.match.userBId);
+    console.log(this.currentUserId == match.match.userBId);
+    if(this.currentUserId == match.match.userBId){
+          await this.service.startMatch(match.match.id);
     }
+  }
+
+  async updateMatch(){
+    if(match.match.id != undefined){
+      await this.service.updateMatch(match.match.id, 0);
+    } 
+  }
+
+
+  async endMatch(){
+    await this.service.endMatch(match.match.id);
+    this.router.navigate(['/home']);
   }
 }
