@@ -13,7 +13,10 @@ export class MatchComponent implements OnInit {
 
   mycards:any = [];
   enemycards:any = [];
-  id : string | undefined = "";
+  userBId : string = "";
+  currentUserId : string = "";
+  matchId : number = 0;
+  playerId : number = 0;
 
   ngOnInit() {
     let card = {
@@ -25,6 +28,31 @@ export class MatchComponent implements OnInit {
     for(let i=0; i<4; i++) {
       this.mycards.push(card);
       this.enemycards.push(card);
+    }
+
+    this.route.paramMap.subscribe(params => {
+        this.matchId = Number(params.get('matchid'));
+    });
+
+    this.route.paramMap.subscribe(params => {
+      this.playerId = Number(params.get('playerid'));
+  });
+
+    this.route.paramMap.subscribe(params => {
+      this.userBId = params.get('userid')!;
+  });
+
+  this.currentUserId = localStorage.getItem("userId")!;
+
+  console.log(this.playerId);
+
+  this.startMatch();
+
+  }
+
+  async startMatch(){
+    if(this.currentUserId == this.userBId){
+          await this.service.startMatch(this.matchId);
     }
   }
 
