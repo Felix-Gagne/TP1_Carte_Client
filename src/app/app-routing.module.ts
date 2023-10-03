@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'match/:userid/:matchid/:playerid', component: MatchComponent},
+  { path: 'match/:playerid', component: MatchComponent},
   { path: 'deck', component: DeckComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/'}

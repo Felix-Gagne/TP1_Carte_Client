@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatchServicesService } from '../services/match-services.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
+const result = localStorage.getItem("match");
+
 @Component({
   selector: 'app-match',
   templateUrl: './match.component.html',
@@ -18,6 +20,7 @@ export class MatchComponent implements OnInit {
   matchId : number = 0;
   playerId : number = 0;
 
+
   ngOnInit() {
     let card = {
       name: "Jedi Chat",
@@ -31,20 +34,17 @@ export class MatchComponent implements OnInit {
     }
 
     this.route.paramMap.subscribe(params => {
-        this.matchId = Number(params.get('matchid'));
-    });
-
-    this.route.paramMap.subscribe(params => {
       this.playerId = Number(params.get('playerid'));
   });
 
     this.route.paramMap.subscribe(params => {
-      this.userBId = params.get('userid')!;
+      const result = params.get('result');
   });
 
   this.currentUserId = localStorage.getItem("userId")!;
 
   console.log(this.playerId);
+  console.log(result);
 
   this.startMatch();
 
@@ -55,5 +55,4 @@ export class MatchComponent implements OnInit {
           await this.service.startMatch(this.matchId);
     }
   }
-
 }

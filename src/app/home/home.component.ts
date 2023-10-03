@@ -39,18 +39,18 @@ export class HomeComponent implements OnInit {
       const userId = localStorage.getItem("userId");
       let playerId = 0;
 
-      if(userId == result.playerA.identityUserId)
-        {
-          playerId = result.playerA.id;
-        }
-      else if(userId == result.playerB.identityUserId){
-          playerId = result.playerB.id;
-        }
-
       if (result !== null) {
         this.isLoading = false;
 
-        this.router.navigate(['/match', result.playerB.identityUserId, result.match.id, playerId]);
+        if(userId == result.playerA.identityUserId)
+        {
+          playerId = result.playerA.id;
+        }
+        else if(userId == result.playerB.identityUserId){
+          playerId = result.playerB.id;
+        }
+
+        this.router.navigate(['/match', playerId]);
         break;
       }
 

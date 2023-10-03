@@ -19,6 +19,7 @@ export class MatchServicesService {
     {
       let x  = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/JoinMatch", null));
       console.log(x);
+      localStorage.setItem("match", x);
       return x;
     }
 
