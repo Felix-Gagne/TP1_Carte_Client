@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatchServicesService } from '../services/match-services.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-const result = localStorage.getItem("match");
+const result = JSON.parse(localStorage.getItem("match") || '{}');
 
 @Component({
   selector: 'app-match',
@@ -19,6 +19,14 @@ export class MatchComponent implements OnInit {
   currentUserId : string = "";
   matchId : number = 0;
   playerId : number = 0;
+
+  //Boolean pour activer les animations des events
+  pickCard:boolean = false;
+  playCard:boolean = false;
+  cardAttack:boolean = false;
+  cardDeath:boolean = false;
+  playerDamage:boolean = false;
+  playerDeath:boolean = false
 
 
   ngOnInit() {
