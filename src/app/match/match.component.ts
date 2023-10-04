@@ -13,7 +13,7 @@ const match = JSON.parse(localStorage.getItem("match") || '{}');
 export class MatchComponent implements OnInit {
   constructor(public service : MatchServicesService,public serviceCard : CardServiceService, public route : ActivatedRoute, public router : Router) { }
 
-  mycards:any = [];
+  myHand:any = [];
   enemycards:any = [];
   currentUserId : string = "";
   playerId : any = 0;
@@ -38,7 +38,6 @@ export class MatchComponent implements OnInit {
       imageUrl:"https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg"
     };
     for(let i=0; i<4; i++) {
-      this.mycards.push(card);
       this.enemycards.push(card);
     }
 
@@ -108,16 +107,18 @@ export class MatchComponent implements OnInit {
   async playCard(){
     if(this.isCurrentTurn){
       this.playingCard = true;
+      console.log(this.serviceCard.cardList);
       var cardName = await this.serviceCard.clickedCard;
-      let cardId = this.mycards.find((card : any) => card.name === cardName);
+      let cardId = this.serviceCard.cardList.find((card : any) => card.name === cardName);
       console.log("card depuis match: " + cardName);
-      console.log("card id: " + cardId.id);
+      console.log("card id: " + cardId?.id);
     }
   }
 
   async getCards(){
     console.log("getting cards");
-    this.mycards = await this.serviceCard.getdeck();
+    await this.serviceCard.getdeck()
+    this.myHand = this.serviceCard.cardHand;
   }
 
   toggleTurn() {

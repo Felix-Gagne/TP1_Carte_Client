@@ -10,6 +10,9 @@ import { environment } from 'src/environments/environment';
 export class CardServiceService {
 
   cardList : CardDTO[] = [];
+  cardHand : CardDTO[] = [];
+  battlefield : CardDTO[] = [];
+  graveyard : CardDTO[] = [];
   clickedCard : any;
 
 constructor(public http : HttpClient) { }
@@ -21,7 +24,7 @@ async getdeck()
 
     let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
     console.log(x);
-
+    this.cardHand = x.slice(0,4);
     this.cardList = x;
     return this.cardList;
   }

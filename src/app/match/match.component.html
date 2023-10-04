@@ -20,7 +20,7 @@
 
   <div class="container" (click)="playCard()">
     <app-card 
-      *ngFor="let card of mycards" 
+      *ngFor="let card of myHand" 
       [attack]="card.attack" 
       [defense]="card.defense" 
       [imageUrl]="card.imageUrl" 
