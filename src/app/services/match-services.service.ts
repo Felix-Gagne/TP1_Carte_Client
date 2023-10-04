@@ -27,9 +27,9 @@ export class MatchServicesService {
     async startMatch(matchId : number)
     {
       let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + matchId, null));
-      console.log("Start Match :" + x);
+      let stringJSON = JSON.stringify(x);
+      console.log("Start Match :" + JSON.parse(x || '{}'));
 
-      //this.EventIndexChanged();
       this.cardList = await this.cardService.getdeck();
       
     }
@@ -37,14 +37,6 @@ export class MatchServicesService {
     async updateMatch(matchId : number, eventIndex : number){
       let x = await lastValueFrom(this.http.get<any>(environment.apiUrl+"api/Match/UpdateMatch/" + matchId + "/" + eventIndex));
       console.log("Update Match :" + x);
-    }
-
-    EventIndexChanged(){
-      let newMatch = JSON.parse(localStorage.getItem("match") || '{}');
-      newMatch.eventIndex++;
-      localStorage.removeItem("match");
-      console.log("New event index:" + newMatch.eventIndex)
-      localStorage.setItem("match", JSON.stringify(newMatch));
     }
 
 

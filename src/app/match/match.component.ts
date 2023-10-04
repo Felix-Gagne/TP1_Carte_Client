@@ -17,8 +17,11 @@ export class MatchComponent implements OnInit {
   enemycards:any = [];
   currentUserId : string = "";
   playerId : number = 0;
+  currentName:string = "";
+  enemyName:string = "";
 
   //Boolean pour activer les animations des events
+  isCurrentTurn:boolean = false;
   pickCard:boolean = false;
   playCard:boolean = false;
   cardAttack:boolean = false;
@@ -47,6 +50,14 @@ export class MatchComponent implements OnInit {
       const result = params.get('result');
   });
 
+  if(this.playerId == match.playerA.id){
+    this.currentName = match.playerA.name;
+    this.enemyName = match.playerB.name;
+  }else{
+    this.currentName = match.playerB.name;
+    this.enemyName = match.playerA.name;
+  }
+
   this.currentUserId = localStorage.getItem("userId")!;
 
   console.log(this.playerId);
@@ -68,7 +79,7 @@ export class MatchComponent implements OnInit {
 
   async updateMatch(){
     if(match.match.id != undefined){
-      await this.service.updateMatch(match.match.id, 0);
+      await this.service.updateMatch(match.match.id, match.match.eventIndex);
     } 
   }
 
