@@ -1,3 +1,4 @@
+import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -32,6 +33,7 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    MatSelectModule,
   ],
   providers: [
     {
