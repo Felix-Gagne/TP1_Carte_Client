@@ -1,14 +1,20 @@
 <div style="width: 100%;height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column">
   <mat-card style="margin: 16px;padding: 16px;">
-    <form>
+    <form [formGroup]="form">
       <mat-form-field style="width: 100%">
-        <input matInput type="username" placeholder="Nom d'utilisateur" name="username" [(ngModel)]="username">
+        <input matInput type="username" placeholder="Nom d'utilisateur" formControlName="username" name="username">
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          Votre nom d'utilisateur est <strong>requis</strong>
+        </mat-error>
       </mat-form-field>
       <mat-form-field style="width: 100%">
-        <input matInput [type]="hidePassword ? 'password' : 'text'"  placeholder="Mot de passe" name="pass" [(ngModel)]="password">
+        <input matInput [type]="hidePassword ? 'password' : 'text'"  placeholder="Mot de passe" formControlName="password" name="pass">
         <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Votre mot de passe est <strong>requis</strong>
+        </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="login()">Connecter</button>
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="!form.valid">Connecter</button>
     </form>
   </mat-card>
   <button mat-raised-button [routerLink]="['/register']" color="accent">Enregistrer</button>

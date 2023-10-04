@@ -3,6 +3,7 @@ import { UserServicesService } from 'src/app/services/user-services.service';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +15,26 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
   username : string = "";
   password : string = "";
-
-  constructor(public service : UserServicesService, public http : HttpClient, public router : Router) { }
+  form = this.fb.group({
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]]
+  });
+  formData?: Data;
+  constructor(public service : UserServicesService, public http : HttpClient, public router : Router, private fb : FormBuilder) { }
 
   ngOnInit() {
-
+    this.form.valueChanges.subscribe(() =>{
+      this.formData = this.form.value;
+    });
   }
 
   async login(){
     try
     {
-      await this.service.login(this.username, this.password);
+      if(this.formData?.username != null && this.formData.password != null)
+      {
+        await this.service.login(this.formData?.username, this.formData.password);
+      }
       this.router.navigate(['/home']);
     }
     catch(e)
@@ -33,4 +43,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+}
+
+interface Data{
+  username?: string | null;
+  password?: string | null;
 }

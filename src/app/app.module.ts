@@ -10,10 +10,11 @@ import { MaterialModule } from './material.module';
 import { CardComponent } from './card/card.component';
 import { MatchComponent } from './match/match.component';
 import { HomeComponent } from './home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeckComponent } from './deck/deck.component';
 import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [	
@@ -23,7 +24,7 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     CardComponent,
     MatchComponent,
     HomeComponent,
-      DeckComponent
+    DeckComponent
    ],
   imports: [
     BrowserModule,
@@ -31,6 +32,8 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     AppRoutingModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
     HttpClientModule,
   ],
   providers: [

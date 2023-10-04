@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'match/:id', component: MatchComponent},
   { path: 'deck', component: DeckComponent },
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: '**', redirectTo: '/'}
 ];
 
