@@ -21,8 +21,8 @@ export class RegisterComponent implements OnInit {
     email: ['', [Validators.required]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    passwordConfirm: ['', [Validators.required, this.matchingPasswordValidator]]
-  });
+    passwordConfirm: ['', [Validators.required]]
+  },{validators: this.matchingPasswordValidator});
   formData?: Data;
 
   constructor(public service : UserServicesService, public router : Router, private fb : FormBuilder) { }
@@ -54,20 +54,17 @@ export class RegisterComponent implements OnInit {
       return null;
     }
 
-    if(password == passwordConfirm){
-      let formValid = true;
-      
-      if(!formValid){
-        control.get('passwordConfirm')?.setErrors({unmatchingPassword:true});
-      }
-      else{
-        control.get('passwordConfirm')?.setErrors({unmatchingPassword:false});
-      }
+    let formValid = password == passwordConfirm;
 
-      return !formValid?{unmatchingPassword:true}:null;
+
+    if(!formValid){
+      control.get('passwordConfirm')?.setErrors({unmatchingPassword:true});
+    }
+    else{
+      control.get('passwordConfirm')?.setErrors({unmatchingPassword:false});
     }
 
-    return null;
+    return !formValid?{unmatchingPassword:true}:null;
   }
 
 }

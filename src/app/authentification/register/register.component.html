@@ -31,10 +31,11 @@
         <mat-error *ngIf="form.get('passwordConfirm')?.hasError('required')">
           Votre confirmation de mot de passe est <strong>requis</strong>
         </mat-error>
-        <mat-error *ngIf="form.get('passwordConfirm')?.hasError('unmatchingPassword')">
-          Les mots de passe ne correspondent pas
-        </mat-error>
       </mat-form-field>
+      
+      <mat-error *ngIf="form.hasError('unmatchingPassword')">
+        Les mots de passe ne correspondent pas
+      </mat-error>
 
       <button mat-raised-button color="primary" (click)="register()" [disabled]="!form.valid">Enregistrer</button>
 
