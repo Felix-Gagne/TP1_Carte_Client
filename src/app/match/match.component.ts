@@ -78,11 +78,12 @@ export class MatchComponent implements OnInit {
     if(result != null){
       await this.processEvents(JSON.parse(result));
       this.updateTurn();
+      this.updateMatch();
     }else{
       console.log("updating...")
       setTimeout(() => {
-        //this.updateMatch();
-      }, 3000);
+        this.updateMatch();
+      }, 500);
     }
   }
 
@@ -108,6 +109,11 @@ export class MatchComponent implements OnInit {
       let cardId = this.serviceCard.cardList.find((card : any) => card.name === cardName);
       console.log("card depuis match: " + cardName);
       console.log("card id: " + cardId?.id);
+
+      if(cardId != undefined){
+        let result = await this.service.playCard(match.match.id, cardId?.id);
+      }
+
     }
   }
 
@@ -132,18 +138,32 @@ export class MatchComponent implements OnInit {
     if(event.$type == "StartMatch"){
       console.log("Event: StartMatch");
       await this.StartMatch();
+      match.match.eventIndex = 1;
     }
     if(event.$type == "DrawCard"){
       console.log("Event: DrawCard id " + event.PlayableCardId + " for player " + event.PlayerId);
       if(event.PlayerId == this.playerId){
         await this.DrawCardCurrent(event.PlayableCardId);
+        
       }else{
         await this.DrawCardenemy(event.PlayableCardId);
       }
     }
+    if(event.$type == "PlayCard"){
+      console.log("playcard");
+    }
+    if(event.$type =="PlayerTurn"){
+      if(event.PlayerId == this.playerId.id){
+        this.isCurrentTurn = true;
+        match.match.isPlayerATurn = false;
+      }else{
+        this.isCurrentTurn = false;
+        match.match.isPlayerATurn = true;
+      }
+    }
     if(event.Events != null){
-      event.Events.forEach((event : any) => {
-        this.processEvents(event);
+      event.Events.forEach(async (event : any) => {
+        await this.processEvents(event);
       });
     }
   }
@@ -155,15 +175,12 @@ export class MatchComponent implements OnInit {
     }, 3000);
   }
 
-  async DrawCardCurrent(cardId : number){
+  DrawCardCurrent(cardId : number){
     var card = this.serviceCard.playableCards.find((card : any) => card.id == cardId);
     console.log(card);
     this.serviceCard.cardHand.push(card!.card);
     this.serviceCard.animateCardId = cardId;
     console.log(this.serviceCard.animateCardId);
-    setTimeout(() => {
-      
-    }, 1000);
   }
 
   async DrawCardenemy(cardId : number){
@@ -171,9 +188,10 @@ export class MatchComponent implements OnInit {
     console.log(card);
     this.enemycards.push(card);
     this._drawCard = true;
-    setTimeout(() => {
-      
-    }, 1000);
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }
