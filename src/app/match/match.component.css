@@ -38,3 +38,43 @@
     left: 50px;
     transition: 0.4s ease-out;
   }
+
+  .turnIndicator {
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.5em;
+    z-index: 1000;
+}
+
+
+@keyframes slideInAnimation {
+  0% {
+    top: -50px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@keyframes slideOutAnimation {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -50px;
+  }
+}
+
+.slide-in {
+  animation: slideInAnimation 1s ease-in-out forwards;
+}
+
+.slide-out {
+  animation: slideOutAnimation 1s ease-in-out forwards;
+}

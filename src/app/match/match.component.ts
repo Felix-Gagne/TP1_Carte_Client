@@ -21,7 +21,7 @@ export class MatchComponent implements OnInit {
   enemyName:string = "";
 
   //Boolean pour activer les animations des events
-  isCurrentTurn:boolean = false;
+  isCurrentTurn:boolean = true;
   pickCard:boolean = false;
   playCard:boolean = false;
   cardAttack:boolean = false;
@@ -87,5 +87,10 @@ export class MatchComponent implements OnInit {
   async endMatch(){
     await this.service.endMatch(match.match.id);
     this.router.navigate(['/home']);
+  }
+
+
+  toggleTurn() {
+    this.isCurrentTurn = !this.isCurrentTurn;
   }
 }
