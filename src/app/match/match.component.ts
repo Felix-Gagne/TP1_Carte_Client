@@ -2,6 +2,10 @@ import { Component, OnInit, } from '@angular/core';
 import { MatchServicesService } from '../services/match-services.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardServiceService } from '../services/card-service.service';
+import { EMPTY_SUBSCRIPTION } from 'rxjs/internal/Subscription';
+import { JsonPipe } from '@angular/common';
+import { CardDTO } from '../Models/CardDTO';
+import { timer } from 'rxjs';
 
 const match = JSON.parse(localStorage.getItem("match") || '{}');
 
@@ -22,7 +26,8 @@ export class MatchComponent implements OnInit {
 
   //Boolean pour activer les animations des events
   isCurrentTurn:boolean = false;
-  pickCard:boolean = false;
+  matchStartAnim:boolean = false;
+  _drawCard:boolean = false;
   playingCard:boolean = false;
   cardAttack:boolean = false;
   cardDeath:boolean = false;
@@ -31,15 +36,6 @@ export class MatchComponent implements OnInit {
 
 
   ngOnInit() {
-    let card = {
-      name: "Jedi Chat",
-      attack: 2,
-      defense: 10,
-      imageUrl:"https://images.squarespace-cdn.com/content/51b3dc8ee4b051b96ceb10de/1394662654865-JKOZ7ZFF39247VYDTGG9/hilarious-jedi-cats-fight-video-preview.jpg?content-type=image%2Fjpeg"
-    };
-    for(let i=0; i<4; i++) {
-      this.enemycards.push(card);
-    }
 
     this.route.paramMap.subscribe(params => {
       this.playerId = Number(params.get('playerid'));
@@ -80,6 +76,7 @@ export class MatchComponent implements OnInit {
       result = await this.service.updateMatch(match.match.id, match.match.eventIndex);
     } 
     if(result != null){
+      await this.processEvents(JSON.parse(result));
       this.updateTurn();
     }else{
       console.log("updating...")
@@ -107,7 +104,6 @@ export class MatchComponent implements OnInit {
   async playCard(){
     if(this.isCurrentTurn){
       this.playingCard = true;
-      console.log(this.serviceCard.cardList);
       var cardName = await this.serviceCard.clickedCard;
       let cardId = this.serviceCard.cardList.find((card : any) => card.name === cardName);
       console.log("card depuis match: " + cardName);
@@ -116,12 +112,68 @@ export class MatchComponent implements OnInit {
   }
 
   async getCards(){
+    match.match.playerDataA.cardsPile.forEach((card : any) => {
+      this.serviceCard.playableCards.push(card);
+    });
+    match.match.playerDataB.cardsPile.forEach((card : any) => {
+      this.serviceCard.playableCards.push(card);
+    });
     console.log("getting cards");
-    await this.serviceCard.getdeck()
+    console.log(this.serviceCard.playableCards);
+    await this.serviceCard.getdeck();
     this.myHand = this.serviceCard.cardHand;
   }
 
-  toggleTurn() {
-    this.isCurrentTurn = !this.isCurrentTurn;
+  toggleAnim() {
+    this.matchStartAnim = !this.matchStartAnim
   }
+
+  async processEvents(event : any){
+    if(event.$type == "StartMatch"){
+      console.log("Event: StartMatch");
+      await this.StartMatch();
+    }
+    if(event.$type == "DrawCard"){
+      console.log("Event: DrawCard id " + event.PlayableCardId + " for player " + event.PlayerId);
+      if(event.PlayerId == this.playerId){
+        await this.DrawCardCurrent(event.PlayableCardId);
+      }else{
+        await this.DrawCardenemy(event.PlayableCardId);
+      }
+    }
+    if(event.Events != null){
+      event.Events.forEach((event : any) => {
+        this.processEvents(event);
+      });
+    }
+  }
+
+  async StartMatch(){
+    this.matchStartAnim = true;
+    setTimeout(() => {
+      this.matchStartAnim = false;
+    }, 3000);
+  }
+
+  async DrawCardCurrent(cardId : number){
+    var card = this.serviceCard.playableCards.find((card : any) => card.id == cardId);
+    console.log(card);
+    this.serviceCard.cardHand.push(card!.card);
+    this.serviceCard.animateCardId = cardId;
+    console.log(this.serviceCard.animateCardId);
+    setTimeout(() => {
+      
+    }, 1000);
+  }
+
+  async DrawCardenemy(cardId : number){
+    var card = this.serviceCard.playableCards.find((card : any) => card.id == cardId);
+    console.log(card);
+    this.enemycards.push(card);
+    this._drawCard = true;
+    setTimeout(() => {
+      
+    }, 1000);
+  }
+
 }

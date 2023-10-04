@@ -13,19 +13,21 @@ export class CardServiceService {
   cardHand : CardDTO[] = [];
   battlefield : CardDTO[] = [];
   graveyard : CardDTO[] = [];
+  playableCards : any[] = [];
   clickedCard : any;
+
+  animateCardId : number = 0;
 
 constructor(public http : HttpClient) { }
 
 async getdeck()
   {
-
     let options = { withCredentials : true }
 
     let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
     console.log(x);
-    this.cardHand = x.slice(0,4);
     this.cardList = x;
+    console.log(this.cardHand);
     return this.cardList;
   }
 }

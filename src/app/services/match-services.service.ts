@@ -33,6 +33,11 @@ export class MatchServicesService {
       return x;
     }
 
+    async playCard(matchId : number, cardId : number){
+      let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/PlayCard/" + matchId + "/" + cardId, null));
+      console.log("PlayCard: " + x);
+      return x;
+    }
 
     async endMatch(matchId : number){
       let x = await lastValueFrom(this.http.get<any>(environment.apiUrl+"api/Match/EndMatch/" + matchId));

@@ -13,7 +13,7 @@
   </div>
   <div style="height: 45%;">
     <h1 style="position: absolute;" >{{currentName}}</h1>
-    <button (click)="toggleTurn()">Start Animation</button>
+    <button (click)="toggleAnim()">Start Animation</button>
   </div>
 </div>
 <div style="display: flex;position: absolute; width: 100%; bottom: -70px;">
@@ -32,3 +32,5 @@
 
 </div>
 <div [class.slide-in]="isCurrentTurn" [class.slide-out]="!isCurrentTurn" class="turnIndicator">Votre Tour</div>
+
+<div [class.fade-out]="matchStartAnim" class="StartMatch"><p>Le match commence!</p></div>
