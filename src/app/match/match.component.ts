@@ -16,12 +16,12 @@ export class MatchComponent implements OnInit {
   mycards:any = [];
   enemycards:any = [];
   currentUserId : string = "";
-  playerId : number = 0;
+  playerId : any = 0;
   currentName:string = "";
   enemyName:string = "";
 
   //Boolean pour activer les animations des events
-  isCurrentTurn:boolean = true;
+  isCurrentTurn:boolean = false;
   pickCard:boolean = false;
   playCard:boolean = false;
   cardAttack:boolean = false;
@@ -62,12 +62,13 @@ export class MatchComponent implements OnInit {
 
   console.log(this.playerId);
   console.log(match);
-
+  this.updateTurn();
   this.startMatch();
 
 
   this.updateMatch();
-  }
+  
+}
 
   async startMatch(){
     console.log("current:"+ this.currentUserId + "\nuserbid : " + match.match.userBId);
@@ -78,9 +79,14 @@ export class MatchComponent implements OnInit {
   }
 
   async updateMatch(){
+    var result;
     if(match.match.id != undefined){
-      await this.service.updateMatch(match.match.id, match.match.eventIndex);
+      result = await this.service.updateMatch(match.match.id, match.match.eventIndex);
     } 
+    if(result != null){
+      this.updateTurn();
+    }else{
+    }
   }
 
 
@@ -89,6 +95,16 @@ export class MatchComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  updateTurn(){
+    console.log(match.match.isPlayerATurn);
+    if(match.match.isPlayerATurn && (this.playerId == match.playerA.id)){
+      this.isCurrentTurn = true;
+      console.log("its my turn");
+    }else if(this.playerId == match.playerB.id){
+      this.isCurrentTurn = true;
+      console.log("its my turn");
+    }
+  }
 
   toggleTurn() {
     this.isCurrentTurn = !this.isCurrentTurn;

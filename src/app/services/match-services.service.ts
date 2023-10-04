@@ -37,6 +37,7 @@ export class MatchServicesService {
     async updateMatch(matchId : number, eventIndex : number){
       let x = await lastValueFrom(this.http.get<any>(environment.apiUrl+"api/Match/UpdateMatch/" + matchId + "/" + eventIndex));
       console.log("Update Match :" + x);
+      return x;
     }
 
 
