@@ -1,5 +1,5 @@
 import { CardDTO } from './../Models/CardDTO';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,10 +10,11 @@ import { environment } from 'src/environments/environment';
 export class CardServiceService {
 
   cardList : CardDTO[] = [];
+  AllCards : CardDTO[] = [];
 
 constructor(public http : HttpClient) { }
 
-async getdeck()
+  async getdeck()
   {
 
     let options = { withCredentials : true }
@@ -23,5 +24,26 @@ async getdeck()
 
     this.cardList = x;
     return this.cardList;
+  }
+
+  async getAllCards(){
+    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetAllCards"));
+    console.log(x);
+
+    this.AllCards = x;
+    return this.AllCards;
+  }
+
+  async getFilteredCards(filtrechoisi : string){
+    console.log(filtrechoisi);
+
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("filtrechoisi",filtrechoisi);
+
+    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
+    console.log(x);
+
+    this.AllCards = x;
+    return this.AllCards;
   }
 }
