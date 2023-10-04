@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 export class CardServiceService {
 
   cardList : CardDTO[] = [];
+  clickedCard : any;
 
 constructor(public http : HttpClient) { }
 

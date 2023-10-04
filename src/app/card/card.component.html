@@ -1,4 +1,4 @@
-<mat-card class="supercard" [style.background-image]="show==='back' ? 'url('+beautifulBackUrl+')' : 'url('+imageUrl+')'">
+<mat-card (click)="playCard()" class="supercard" [style.background-image]="show==='back' ? 'url('+beautifulBackUrl+')' : 'url('+imageUrl+')'">
   <mat-card-header style="background-color: #0008;" *ngIf="show==='front'">
     <mat-card-title>{{name}}</mat-card-title>
   </mat-card-header>

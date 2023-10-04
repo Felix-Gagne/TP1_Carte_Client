@@ -18,8 +18,7 @@
 </div>
 <div style="display: flex;position: absolute; width: 100%; bottom: -70px;">
 
-  <div class="container">
-
+  <div class="container" (click)="playCard()">
     <app-card 
       *ngFor="let card of mycards" 
       [attack]="card.attack" 
@@ -29,7 +28,6 @@
       [name]="card.name"
        class="card">
     </app-card>
-    
   </div>
 
 </div>

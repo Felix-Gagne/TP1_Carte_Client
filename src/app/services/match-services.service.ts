@@ -2,9 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CardDTO } from '../Models/CardDTO';
-import { CardServiceService } from './card-service.service';
-import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +9,8 @@ import { JsonPipe } from '@angular/common';
 
 export class MatchServicesService {
 
-  cardList : CardDTO[] = [];
 
-  constructor(public http : HttpClient, public cardService : CardServiceService) { }
+  constructor(public http : HttpClient) { }
 
     async joinMatch()
     {
@@ -27,11 +23,8 @@ export class MatchServicesService {
     async startMatch(matchId : number)
     {
       let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + matchId, null));
-      let stringJSON = JSON.stringify(x);
-      console.log("Start Match :" + JSON.parse(x || '{}'));
+      console.log("Start Match :" + x);
 
-      this.cardList = await this.cardService.getdeck();
-      
     }
 
     async updateMatch(matchId : number, eventIndex : number){

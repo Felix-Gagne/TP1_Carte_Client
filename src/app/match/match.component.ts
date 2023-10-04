@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { MatchServicesService } from '../services/match-services.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CardServiceService } from '../services/card-service.service';
 
 const match = JSON.parse(localStorage.getItem("match") || '{}');
 
@@ -10,8 +11,7 @@ const match = JSON.parse(localStorage.getItem("match") || '{}');
   styleUrls: ['./match.component.css']
 })
 export class MatchComponent implements OnInit {
-
-  constructor(public service : MatchServicesService, public route : ActivatedRoute, public router : Router) { }
+  constructor(public service : MatchServicesService,public serviceCard : CardServiceService, public route : ActivatedRoute, public router : Router) { }
 
   mycards:any = [];
   enemycards:any = [];
@@ -23,7 +23,7 @@ export class MatchComponent implements OnInit {
   //Boolean pour activer les animations des events
   isCurrentTurn:boolean = false;
   pickCard:boolean = false;
-  playCard:boolean = false;
+  playingCard:boolean = false;
   cardAttack:boolean = false;
   cardDeath:boolean = false;
   playerDamage:boolean = false;
@@ -64,15 +64,12 @@ export class MatchComponent implements OnInit {
   console.log(match);
   this.updateTurn();
   this.startMatch();
-
-
+  this.getCards();
   this.updateMatch();
   
 }
 
   async startMatch(){
-    console.log("current:"+ this.currentUserId + "\nuserbid : " + match.match.userBId);
-    console.log(this.currentUserId == match.match.userBId);
     if(this.currentUserId == match.match.userBId){
           await this.service.startMatch(match.match.id);
     }
@@ -86,6 +83,10 @@ export class MatchComponent implements OnInit {
     if(result != null){
       this.updateTurn();
     }else{
+      console.log("updating...")
+      setTimeout(() => {
+        //this.updateMatch();
+      }, 3000);
     }
   }
 
@@ -96,7 +97,6 @@ export class MatchComponent implements OnInit {
   }
 
   updateTurn(){
-    console.log(match.match.isPlayerATurn);
     if(match.match.isPlayerATurn && (this.playerId == match.playerA.id)){
       this.isCurrentTurn = true;
       console.log("its my turn");
@@ -104,6 +104,20 @@ export class MatchComponent implements OnInit {
       this.isCurrentTurn = true;
       console.log("its my turn");
     }
+  }
+  async playCard(){
+    if(this.isCurrentTurn){
+      this.playingCard = true;
+      var cardName = await this.serviceCard.clickedCard;
+      let cardId = this.mycards.find((card : any) => card.name === cardName);
+      console.log("card depuis match: " + cardName);
+      console.log("card id: " + cardId.id);
+    }
+  }
+
+  async getCards(){
+    console.log("getting cards");
+    this.mycards = await this.serviceCard.getdeck();
   }
 
   toggleTurn() {
