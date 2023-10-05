@@ -10,7 +10,7 @@
 
       <button mat-button (click)="Filtrage()">Filter</button>
 </div>
-<div style="display: inline-flex; padding: 10px;" *ngFor="let item of cardList">
+<div style="display: inline-flex; padding: 10px;" *ngFor="let item of truecardlist">
   <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
   <span style="margin-left: 10px;"></span>
 </div>
