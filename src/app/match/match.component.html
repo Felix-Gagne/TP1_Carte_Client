@@ -1,27 +1,25 @@
 <div class="board" style="height: 100%;background-image: url('/assets/mergedBoardImage.png'); background-size: cover;">
   <div style="height: 45%;">
-    <h1 style="position: absolute;">Adversaire</h1>
+    <h1 style="position: absolute;">{{enemyName}}</h1>
     <div style="display: flex; position: absolute; width: 100%; top: -100px;">
 
       <div class="container">
     
-        <app-card *ngFor="let card of enemycards" [show]="'back'" class="card"></app-card>
+        <app-card *ngFor="let card of serviceCard.enemyHand" [show]="'back'" class="card"></app-card>
     
       </div>
     
     </div>
   </div>
   <div style="height: 45%;">
-    <h1 style="position: absolute;">Mon jeu</h1>
-    
+    <h1 style="position: absolute;" >{{currentName}}</h1>
   </div>
 </div>
 <div style="display: flex;position: absolute; width: 100%; bottom: -70px;">
 
-  <div class="container">
-
+  <div class="container" (click)="playCard()">
     <app-card 
-      *ngFor="let card of mycards" 
+      *ngFor="let card of serviceCard.currentHand" 
       [attack]="card.attack" 
       [defense]="card.defense" 
       [imageUrl]="card.imageUrl" 
@@ -29,7 +27,11 @@
       [name]="card.name"
        class="card">
     </app-card>
-    
   </div>
 
 </div>
+<div [class.slide-in]="isCurrentTurn" [class.slide-out]="!isCurrentTurn" class="turnIndicator">Votre Tour</div>
+
+<div [class.fade-out]="matchStartAnim" class="StartMatch"><p>Le match commence!</p></div>
+
+<button (click)="endMatch()" class="endMatch">End Match</button>

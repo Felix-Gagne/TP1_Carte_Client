@@ -34,11 +34,23 @@ export class HomeComponent implements OnInit {
       if(!this.isLoading){
         break;
       }
+
       const result = await this.matchService.joinMatch();
+      const userId = localStorage.getItem("userId");
+      let playerId = 0;
 
       if (result !== null) {
         this.isLoading = false;
-        this.router.navigate(['/match', result.match.id]);
+
+        if(userId == result.playerA.identityUserId)
+        {
+          playerId = result.playerA.id;
+        }
+        else if(userId == result.playerB.identityUserId){
+          playerId = result.playerB.id;
+        }
+
+        this.router.navigate(['/match', playerId]);
         break;
       }
 
