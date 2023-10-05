@@ -23,6 +23,7 @@ export class MatchComponent implements OnInit {
   playerId : any = 0;
   currentName:string = "";
   enemyName:string = "";
+  cardDrew:number = 0;
 
   //Boolean pour activer les animations des events
   isCurrentTurn:boolean = false;
@@ -35,7 +36,7 @@ export class MatchComponent implements OnInit {
   playerDeath:boolean = false
 
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.route.paramMap.subscribe(params => {
       this.playerId = Number(params.get('playerid'));
@@ -57,8 +58,8 @@ export class MatchComponent implements OnInit {
 
   console.log(this.playerId);
   console.log(match);
-  this.updateTurn();
   this.startMatch();
+  this.updateTurn();
   this.getCards();
   this.updateMatch();
   
@@ -73,6 +74,7 @@ export class MatchComponent implements OnInit {
   async updateMatch(){
     var result;
     if(match.match.id != undefined){
+      console.log("EventIndex: " + match.match.eventIndex);
       result = await this.service.updateMatch(match.match.id, match.match.eventIndex);
     } 
     if(result != null){
@@ -90,7 +92,6 @@ export class MatchComponent implements OnInit {
 
   async endMatch(){
     await this.service.endMatch(match.match.id);
-    this.router.navigate(['/home']);
   }
 
   updateTurn(){
@@ -112,6 +113,7 @@ export class MatchComponent implements OnInit {
 
       if(cardId != undefined){
         let result = await this.service.playCard(match.match.id, cardId?.id);
+        match.match.eventIndex++;
       }
 
     }
@@ -137,10 +139,14 @@ export class MatchComponent implements OnInit {
   async processEvents(event : any){
     if(event.$type == "StartMatch"){
       console.log("Event: StartMatch");
-      await this.StartMatch();
+      await this.StartMatchEvent();
       match.match.eventIndex = 1;
     }
-    if(event.$type == "DrawCard"){
+    else if(event.$type == "DrawCard"){
+      if(this.cardDrew >= 7){
+        match.match.eventIndex++;
+      }
+      this.cardDrew++;
       console.log("Event: DrawCard id " + event.PlayableCardId + " for player " + event.PlayerId);
       if(event.PlayerId == this.playerId){
         await this.DrawCardCurrent(event.PlayableCardId);
@@ -149,10 +155,10 @@ export class MatchComponent implements OnInit {
         await this.DrawCardenemy(event.PlayableCardId);
       }
     }
-    if(event.$type == "PlayCard"){
+    else if(event.$type == "PlayCard"){
       console.log("playcard");
     }
-    if(event.$type =="PlayerTurn"){
+    else if(event.$type =="PlayerTurn"){
       if(event.PlayerId == this.playerId.id){
         this.isCurrentTurn = true;
         match.match.isPlayerATurn = false;
@@ -168,7 +174,7 @@ export class MatchComponent implements OnInit {
     }
   }
 
-  async StartMatch(){
+  async StartMatchEvent(){
     this.matchStartAnim = true;
     setTimeout(() => {
       this.matchStartAnim = false;

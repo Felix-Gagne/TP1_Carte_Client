@@ -33,3 +33,5 @@
 <div [class.slide-in]="isCurrentTurn" [class.slide-out]="!isCurrentTurn" class="turnIndicator">Votre Tour</div>
 
 <div [class.fade-out]="matchStartAnim" class="StartMatch"><p>Le match commence!</p></div>
+
+<button (click)="endMatch()" class="endMatch">End Match</button>
