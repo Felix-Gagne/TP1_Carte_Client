@@ -17,7 +17,6 @@ const match = JSON.parse(localStorage.getItem("match") || '{}');
 export class MatchComponent implements OnInit {
   constructor(public service : MatchServicesService,public serviceCard : CardServiceService, public route : ActivatedRoute, public router : Router) { }
 
-  enemycards:any = [];
   currentUserId : string = "";
   playerId : any = 0;
   currentName:string = "";
@@ -82,7 +81,7 @@ export class MatchComponent implements OnInit {
       console.log("updating...")
       setTimeout(() => {
         this.updateMatch();
-      }, 500);
+      }, 100);
     }
   }
 
@@ -109,8 +108,6 @@ export class MatchComponent implements OnInit {
       console.log("card depuis match: " + cardName);
       console.log("card id: " + cardId?.id);
       console.log(match.match.playerDataA.cardsPile);
-      //let cardSplice = match.match.playerDataA.cardsPile.find(cardId);
-      //console.log("card a splice : " + cardSplice);
       console.log(this.serviceCard.playableCards);
       console.log("id de la carte joué" + cardId);
       console.log(match);
@@ -197,7 +194,7 @@ export class MatchComponent implements OnInit {
   async DrawCardenemy(cardId : number){
     var card = this.serviceCard.playableCards.find((card : any) => card.id == cardId);
     console.log(card);
-    this.enemycards.push(card);
+    this.serviceCard.enemyHand.push(card!.card);
     this._drawCard = true;
   }
 
