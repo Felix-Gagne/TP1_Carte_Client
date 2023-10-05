@@ -22,8 +22,13 @@ export class MatchServicesService {
 
     async startMatch(matchId : number)
     {
+      try{
       let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+"api/Match/StartMatch/" + matchId, null));
       console.log("Start Match :" + x);
+      }
+      catch(e){
+        console.log("Ce n'est pas votre tours")
+      }
 
     }
 

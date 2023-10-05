@@ -5,7 +5,7 @@
 
       <div class="container">
     
-        <app-card *ngFor="let card of enemycards" [show]="'back'" class="card"></app-card>
+        <app-card *ngFor="let card of serviceCard.enemyHand" [show]="'back'" class="card"></app-card>
     
       </div>
     
@@ -19,7 +19,7 @@
 
   <div class="container" (click)="playCard()">
     <app-card 
-      *ngFor="let card of myHand" 
+      *ngFor="let card of serviceCard.currentHand" 
       [attack]="card.attack" 
       [defense]="card.defense" 
       [imageUrl]="card.imageUrl" 

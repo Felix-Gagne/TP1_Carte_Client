@@ -10,10 +10,18 @@ import { environment } from 'src/environments/environment';
 export class CardServiceService {
 
   cardList : CardDTO[] = [];
-  cardHand : CardDTO[] = [];
-  battlefield : CardDTO[] = [];
-  graveyard : CardDTO[] = [];
   playableCards : any[] = [];
+
+  currentHand : any[] = [];
+  enemyHand :any[] = [];
+  currentPile : any[] = [];
+  enemyPile : any[] = [];
+  currentBattlefield : any[] = [];
+  enemyBattlefield : any[] = [];
+  currentGravetard : any[] = [];
+  enemyGraveYard : any[] = [];
+
+
   clickedCard : any;
 
   animateCardId : number = 0;
@@ -27,7 +35,7 @@ async getdeck()
     let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
     console.log(x);
     this.cardList = x;
-    console.log(this.cardHand);
+    console.log(this.currentHand);
     return this.cardList;
   }
 }
