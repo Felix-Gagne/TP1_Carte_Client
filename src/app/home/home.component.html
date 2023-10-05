@@ -1,26 +1,9 @@
-<style>
-  .loading-screen {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-        }
-
-        .loading-icon {
-            font-size: 40px;
-            color: white;
-        }
-</style>
 
 <button mat-raised-button [routerLink]="['/login']" color="accent">Login</button>
 <span style="margin-left: 10px;"></span>
 <button mat-raised-button [routerLink]="['/register']" color="accent">Register</button>
+<span style="margin-left: 10px;"></span>
+<button mat-raised-button (click)="signOut()" color="accent">Sign Out</button>
 <span style="margin-left: 10px;"></span>
 <button mat-raised-button [routerLink]="['/match']" color="accent">Board</button>
 <span style="margin-left: 10px;"></span>
@@ -33,10 +16,15 @@
   <app-card [show]="'back'"></app-card>
 </div>
 
-<div class="loading-screen" *ngIf="isLoading">
-  <div class="loading-icon">Loading...</div>
-  <label for="showLoading" style="color: white; cursor: pointer;">Click to dismiss</label>
+<div *ngIf="isLoading" class="loading-screen">
+  <div class="content">
+    <div class="loading-text">Recherche de match...</div>
+    <div class="progress-bar"></div>
+    <button (click)="isLoading = false" class="cancel-button">Cancel</button>
+  </div>
 </div>
+
+
 
 <span style="margin-left: 10px;"></span>
 

@@ -3,6 +3,18 @@
     transform: perspective(100vh) rotateX(30deg);
 }
 
+.endMatch {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.5em;
+  z-index: 1000;
+}
  
 .container {
     position: relative;
@@ -38,3 +50,90 @@
     left: 50px;
     transition: 0.4s ease-out;
   }
+
+  .turnIndicator {
+    position: fixed;
+    top: -50px;
+    opacity: 0;
+    left: 0;
+    width: 100%;
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.5em;
+    z-index: 1000;
+}
+
+
+@keyframes slideInAnimation {
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+  100% {
+    top: 0px;
+    opacity: 100;
+  }
+}
+
+@keyframes slideOutAnimation {
+  0% {
+    top: 0px;
+    opacity: 100;
+  }
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
+.slide-in {
+  animation: slideInAnimation 1s ease-in-out forwards;
+}
+
+.slide-out {
+  animation: slideOutAnimation 1s ease-in-out forwards;
+}
+
+
+.StartMatch {
+  width: 300px; /* Adjust the size as needed */
+  height: 200px; /* This makes it a square */
+  background-color: grey;
+  display: flex;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+}
+.StartMatch p {
+  color: white; /* Text color */
+  font-size: 18px; /* Adjust font size as needed */
+  text-align: center; /* Center text horizontally within the square */
+}
+
+.fade-out {
+  animation: fadeOutAnimation 2s ease-in-out forwards;
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    opacity: 100%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 100%;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+  100% {
+    opacity: 0%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(3);
+  }
+}

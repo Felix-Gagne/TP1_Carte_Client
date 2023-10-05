@@ -32,7 +32,13 @@ export class UserServicesService {
       password
     );
     
-    let x = await lastValueFrom(this.http.post<LoginDTO>(environment.apiUrl+'api/User/Login', loginDTO));
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/Login', loginDTO));
+    console.log(x.id);
+    localStorage.setItem('userId', x.id);
+  }
+
+  async signOut(){
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/SignOut', null));
     console.log(x);
   }
 }
