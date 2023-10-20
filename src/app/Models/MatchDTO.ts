@@ -1,60 +1,72 @@
-interface Card {
-    id: number;
-    name: string;
-    attack: number;
-    defense: number;
-    imageUrl: string;
+export class Card {
+    constructor(
+        public id: number,
+        public name: string,
+        public attack: number,
+        public defense: number,
+        public imageUrl: string
+    ){}
+    
 }
 
-interface PlayerData {
-    id: number;
-    health: number;
-    playerId: number;
-    cardsPile: {
-        id: number;
-        card: Card;
-        health: number;
-        attack: number;
-    }[];
-    hand: {
-        id: number;
-        card: Card;
-        health: number;
-        attack: number;
-    }[];
-    battleField: Card[]; // Define a proper type for the battlefield if needed
-    graveyard: Card[];   // Define a proper type for the graveyard if needed
+export class PlayableCard {
+    constructor(
+        public id: number,
+        public card: Card,
+        public health: number,
+        public attack: number
+    ){}
 }
 
-interface SerializedEvent {
-    id: number;
-    index: number;
-    serializedEvent: string;
+export class PlayerData {
+    constructor(
+        public id: number,
+        public health: number,
+        public playerId: number,
+        public cardsPile: PlayableCard[],
+        public hand: PlayableCard[],
+        public battleField: PlayableCard[],
+        public graveyard: PlayableCard[]
+    ){} 
 }
 
-interface Match {
-    id: number;
-    isPlayerATurn: boolean;
-    eventIndex: number;
-    isMatchCompleted: boolean;
-    winnerUserId: string | null;
-    userAId: string;
-    userBId: string;
-    playerDataA: PlayerData;
-    playerDataB: PlayerData;
-    serializedEvents: SerializedEvent[];
+export class SerializedEvent {
+    constructor(
+        public id: number,
+        public index: number,
+        public serializedEvent: string
+    ){}
 }
 
-interface Player {
-    id: number;
-    name: string;
-    money: number;
-    identityUserId: string;
-    deckCard: Card[];
+export class Match {
+    constructor(
+        public id: number,
+        public isPlayerATurn: boolean,
+        public eventIndex: number,
+        public isMatchCompleted: boolean,
+        public winnerUserId: string | null,
+        public userAId: string,
+        public userBId: string,
+        public playerDataA: PlayerData,
+        public playerDataB: PlayerData,
+        public serializedEvents: SerializedEvent[],
+    ){}
 }
 
-interface GameData {
-    match: Match;
-    playerA: Player;
-    playerB: Player;
+export class Player {
+    constructor(
+        public id: number,
+        public name: string,
+        public money: number,
+        public identityUserId: string,
+        public deckCard: Card[]
+    ){}
+}
+
+export class GameData {
+    constructor(
+        public match: Match,
+        public playerA: Player,
+        public playerB: Player
+    ){}
 }

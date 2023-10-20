@@ -1,37 +1,37 @@
 <div class="board" style="height: 100%;background-image: url('/assets/mergedBoardImage.png'); background-size: cover;">
   <div style="height: 45%;">
-    <h1 style="position: absolute;">{{enemyName}}</h1>
+    <h1 style="position: absolute;">{{this.service.enemyName}}</h1>
     <div style="display: flex; position: absolute; width: 100%; top: -100px;">
 
       <div class="container">
     
-        <app-card *ngFor="let card of serviceCard.enemyHand" [show]="'back'" class="card"></app-card>
+        <app-card *ngFor="let card of this.service.enemyHand " [show]="'back'" class="card"></app-card>
     
       </div>
     
     </div>
   </div>
   <div style="height: 45%;">
-    <h1 style="position: absolute;" >{{currentName}}</h1>
+    <h1 style="position: absolute;" >{{this.service.currentName}}</h1>
   </div>
 </div>
 <div style="display: flex;position: absolute; width: 100%; bottom: -70px;">
 
-  <div class="container" (click)="playCard()">
+  <div class="container" (click)="this.service.playCard()">
     <app-card 
-      *ngFor="let card of serviceCard.currentHand" 
+      *ngFor="let card of this.service.currentHand" 
       [attack]="card.attack" 
-      [defense]="card.defense" 
-      [imageUrl]="card.imageUrl" 
-      [health]="card.defense" 
-      [name]="card.name"
+      [defense]="card.card.defense" 
+      [imageUrl]="card.card.imageUrl" 
+      [health]="card.health" 
+      [name]="card.card.name"
        class="card">
     </app-card>
   </div>
 
 </div>
-<div [class.slide-in]="isCurrentTurn" [class.slide-out]="!isCurrentTurn" class="turnIndicator">Votre Tour</div>
+<div [class.slide-in]="this.service.isCurrentTurn" [class.slide-out]="!this.service.isCurrentTurn" class="turnIndicator">Votre Tour</div>
 
-<div [class.fade-out]="matchStartAnim" class="StartMatch"><p>Le match commence!</p></div>
+<div [class.fade-out]="this.service.matchStartAnim" class="StartMatch"><p>Le match commence!</p></div>
 
-<button (click)="endMatch()" class="endMatch">End Match</button>
+<button (click)="this.service.endMatch()" class="endMatch">End Match</button>
