@@ -1,0 +1,18 @@
+/* styles.css */
+a{
+    text-decoration: none;
+}
+
+ul.horizontal-list {
+    list-style: none;
+    padding: 0;
+}
+
+ul.horizontal-list li {
+    display: inline;
+    margin: 0;
+}
+
+ul.horizontal-list li {
+    margin: 0 20px;
+}

@@ -38,7 +38,7 @@ export class UserServicesService {
   }
 
   async signOut(){
-    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/SignOut', null));
+    let x = await lastValueFrom(this.http.post<any>('https://localhost:7219/api/User/SignOut', null));
     console.log(x);
   }
 }
