@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CardServiceService {
 
+  AllCards : CardDTO[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
 
