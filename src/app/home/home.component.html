@@ -1,17 +1,25 @@
 
-<button mat-raised-button [routerLink]="['/login']" color="accent">Login</button>
-<span style="margin-left: 10px;"></span>
-<button mat-raised-button [routerLink]="['/register']" color="accent">Register</button>
-<span style="margin-left: 10px;"></span>
-<button mat-raised-button (click)="signOut()" color="accent">Sign Out</button>
-<span style="margin-left: 10px;"></span>
-<button mat-raised-button [routerLink]="['/match']" color="accent">Board</button>
-<span style="margin-left: 10px;"></span>
-<button mat-raised-button [routerLink]="['/deck']" color="accent">Deck</button>
-<span style="margin-left: 50px;"></span>
-<button mat-raised-button [routerLink]="['/store']" color="accent">Store</button>
-<span style="margin-left: 10px;"></span>
-<button mat-raised-button color="accent" (click)="join()">Join a freaking game</button>
+<div style="display: flex;">
+  <button mat-raised-button [routerLink]="['/login']" color="accent">Login</button>
+  <span style="margin-left: 10px;"></span>
+  <button mat-raised-button [routerLink]="['/register']" color="accent">Register</button>
+  <span style="margin-left: 10px;"></span>
+  <button mat-raised-button (click)="signOut()" color="accent">Sign Out</button>
+  <span style="margin-left: 10px;"></span>
+  <button mat-raised-button [routerLink]="['/match']" color="accent">Board</button>
+  <span style="margin-left: 10px;"></span>
+  <button mat-raised-button [routerLink]="['/deck']" color="accent">Deck</button>
+  <span style="margin-left: 50px;"></span>
+  <button mat-raised-button [routerLink]="['/store']" color="accent">Store</button>
+  <span style="margin-left: 10px;"></span>
+  <button mat-raised-button color="accent" (click)="join()">Join a freaking game</button>
+  <span style="margin-left: auto;"></span>
+  <div style="background-color: #69f0ae; margin-right: 15px; display: flex; align-items: center; border-radius: 10px; width: 100px; justify-content: center;">
+    <h1 style="color: black; margin: 0;">
+      500
+    </h1>
+  </div>  
+</div>
 <div style="display: flex; padding: 10px;">
   <app-card [attack]="catcard.attack" [defense]="catcard.defense" [imageUrl]="catcard.imageUrl" [health]="catcard.defense" [name]="catcard.name"></app-card>
   <span style="margin-left: 10px;"></span>
@@ -25,6 +33,8 @@
     <button (click)="isLoading = false" class="cancel-button">Cancel</button>
   </div>
 </div>
+
+
 
 
 

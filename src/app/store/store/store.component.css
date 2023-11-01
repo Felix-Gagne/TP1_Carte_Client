@@ -16,3 +16,13 @@ ul.horizontal-list li {
 ul.horizontal-list li {
     margin: 0 20px;
 }
+
+.btn{
+    background-color: green;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}

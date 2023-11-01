@@ -10,12 +10,11 @@ import { StoreCards } from '../Models/StoreCards';
 export class StoreService {
 
   storeCardsList : StoreCards[] = [];
-
   constructor(public http : HttpClient) { }
 
   async getBuyableCards(){
 
-
+    this.storeCardsList = [];
     let x = await lastValueFrom(this.http.get<any>(environment.apiUrl+'api/Store/GetBuyableCards'));
     console.log(x);
     for(let a in x){
@@ -27,5 +26,17 @@ export class StoreService {
     console.log(this.storeCardsList);
     return this.storeCardsList;
 
+  }
+
+  async buyCards(cardId:number){
+
+    var username = localStorage.getItem("username");
+
+    const requestBody = {
+      cardId: cardId,
+      username: username,
+    };
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/Store/BuyCard/', requestBody));
+    console.log(x);
   }
 }

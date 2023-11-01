@@ -2,8 +2,7 @@
 <div style="text-align: center">
   <ul class="horizontal-list">
     <li *ngFor="let card of storeCardsList">
-      <a href="">
-        <div style="display: inline-flex; padding: 10px;">
+        <div style="display: inline-flex; padding: 10px; flex-direction: column;">
           <app-card
             style="color: black;"
             [attack]="card.card.attack"
@@ -12,9 +11,11 @@
             [health]="card.card.defense"
             [name]="card.card.name"
           ></app-card>
+          <button class="btn" (click)="buyCard(card.id)">
+            Acheter pour {{card.buyAmount}}
+          </button>
           <span style="margin-left: 10px;"></span>
         </div>
-      </a>
     </li>
   </ul>
 </div>

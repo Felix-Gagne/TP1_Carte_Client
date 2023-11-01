@@ -33,9 +33,13 @@ export class UserServicesService {
     );
     
     let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/Login', loginDTO));
+    console.log(x);
     console.log(x.id);
     localStorage.setItem('userId', x.id);
+    localStorage.setItem('username', username);
   }
+
+
 
   async signOut(){
     let x = await lastValueFrom(this.http.post<any>('https://localhost:7219/api/User/SignOut', null));

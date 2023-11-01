@@ -27,6 +27,7 @@ import { StoreComponent } from './store/store/store.component';
     HomeComponent,
       DeckComponent,
       StoreComponent,
+      
    ],
   imports: [
     BrowserModule,
