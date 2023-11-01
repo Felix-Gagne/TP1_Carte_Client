@@ -9,6 +9,7 @@
   <div *ngIf="showDeck" class="deckContent" (click)="handleDeckClick($event)">
     <div class="content">
       <div class="close" (click)="showDeck = false">X</div>
+      <p>{{selectedDeckName}}</p>
       <div *ngFor="let item of fakeDeckContent">
         <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
         <span style="margin-left: 10px;"></span>

@@ -21,6 +21,7 @@ export class DeckComponent implements OnInit {
 
   FakeDeckList : DeckDTO[] = [];
   fakeDeckContent : CardDTO[] = [];
+  selectedDeckName : string = "";
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
@@ -48,8 +49,13 @@ export class DeckComponent implements OnInit {
 
 
   showDeckContent(id:number){
-    this.fakeDeckContent = this.FakeDeckList[0].cards[0];
-    this.showDeck = true;
+    this.FakeDeckList.forEach(deck => {
+      if(deck.id == id){
+        this.selectedDeckName = deck.name
+      this.fakeDeckContent = deck.cards[0];
+      this.showDeck = true;
+      }
+    });
 
   }
 
