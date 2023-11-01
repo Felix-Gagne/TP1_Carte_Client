@@ -39,15 +39,16 @@ export class DeckComponent implements OnInit {
     this.AllCards = await this.cardServiceService.getAllCards();
 
     this.FakeDeckList = [ 
-      new DeckDTO(1, "deck de base", [this.cardServiceService.fakeCardList]),
-      new DeckDTO(2, "deck test",[this.cardServiceService.fakeCardList]),
+      new DeckDTO(1, "best deck", [this.cardServiceService.fakeCardList]),
+      new DeckDTO(2, "deck de vlad",[this.cardServiceService.fakeCardList]),
       new DeckDTO(3, "funny deck",[this.cardServiceService.fakeCardList])
-    ]
+    ];
+    this.fakeDeckContent = this.FakeDeckList[0].cards[0];
   }
 
 
   showDeckContent(id:number){
-    this.fakeDeckContent = this.FakeDeckList[0].cards;
+    this.fakeDeckContent = this.FakeDeckList[0].cards[0];
     this.showDeck = true;
 
   }

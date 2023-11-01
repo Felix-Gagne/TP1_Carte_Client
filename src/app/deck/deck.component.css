@@ -52,10 +52,15 @@
     .content{
         width: 1200px;
         padding: 20px;
+        padding-top: 60px;
         background-color: #696969;
         border-radius: 10px;
         text-align: center;
         position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
 
         .close{
             position: absolute;
