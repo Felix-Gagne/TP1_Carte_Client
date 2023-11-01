@@ -130,7 +130,7 @@ export class MatchComponent implements OnInit {
     });
     console.log("getting cards");
     console.log(this.serviceCard.playableCards);
-    await this.serviceCard.getdeck();
+    await this.serviceCard.getInventory();
   }
 
   toggleAnim() {

@@ -24,14 +24,9 @@ export class DeckComponent implements OnInit {
   constructor(public cardServiceService: CardServiceService) { }
 
   async ngOnInit() {
-
-    this.cardList = await this.cardServiceService.getdeck();
-
     this.truecardlist = await this.cardServiceService.getdeck();
 
-    this.mecards = await this.cardServiceService.getdeck();
-
-    this.AllCards = await this.cardServiceService.getAllCards();
+    this.AllCards = await this.cardServiceService.getInventory();
   }
 
   async Filtrage(){
@@ -40,7 +35,7 @@ export class DeckComponent implements OnInit {
 
     console.log(this.selectedFiltre);
     if(this.selectedFiltre === undefined){
-      this.truecardlist = await this.cardServiceService.getdeck();
+      this.truecardlist = await this.cardServiceService.getInventory();
     } else {
       if(this.selectedFiltre.length != 0){
         this.cardList = await this.cardServiceService.getFilteredCards(this.selectedFiltre);
