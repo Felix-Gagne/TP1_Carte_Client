@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardDTO } from '../Models/CardDTO';
 import { FormBuilder } from '@angular/forms';
 import { Data } from '@angular/router';
+import { DeckDTO } from '../Models/DeckDTO';
 
 @Component({
   selector: 'app-deck',
@@ -16,6 +17,10 @@ export class DeckComponent implements OnInit {
   mecards : CardDTO[] = [];
   AllCards : CardDTO[] = [];
   truecardlist : CardDTO[] = [];
+  showDeck : boolean = false;
+
+  FakeDeckList : DeckDTO[] = [];
+  fakeDeckContent : CardDTO[] = [];
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
@@ -32,7 +37,26 @@ export class DeckComponent implements OnInit {
     this.mecards = await this.cardServiceService.getdeck();
 
     this.AllCards = await this.cardServiceService.getAllCards();
+
+    this.FakeDeckList = [ 
+      new DeckDTO(1, "deck de base", [this.cardServiceService.fakeCardList]),
+      new DeckDTO(2, "deck test",[this.cardServiceService.fakeCardList]),
+      new DeckDTO(3, "funny deck",[this.cardServiceService.fakeCardList])
+    ]
   }
+
+
+  showDeckContent(id:number){
+    this.fakeDeckContent = this.FakeDeckList[0].cards;
+    this.showDeck = true;
+
+  }
+
+  handleDeckClick(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.showDeck = false;
+    }
+}
 
   async Filtrage(){
 

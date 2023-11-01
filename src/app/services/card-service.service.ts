@@ -23,6 +23,15 @@ export class CardServiceService {
   enemyGraveYard : any[] = [];
 
 
+  fakeCardList : any[] = [
+    new CardDTO(1, "carte 1", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(2, "carte 2", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(3, "carte 3", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(4, "carte 4", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(5, "carte 5", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(6, "carte 6", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+  ];
+
   clickedCard : any;
 
   animateCardId : number = 0;
