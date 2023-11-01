@@ -45,4 +45,10 @@ export class UserServicesService {
     let x = await lastValueFrom(this.http.post<any>('https://localhost:7219/api/User/SignOut', null));
     console.log(x);
   }
+
+  async getMoney(){
+    let x = await lastValueFrom(this.http.get<number>(environment.apiUrl+'api/User/GetMoney'));
+    console.log(x);
+    return x;
+  }
 }
