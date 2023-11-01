@@ -30,13 +30,10 @@ export class StoreService {
 
   async buyCards(cardId:number){
 
-    var username = localStorage.getItem("username");
-
     const requestBody = {
-      cardId: cardId,
-      username: username,
+      cardId: cardId
     };
-    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/Store/BuyCard/', requestBody));
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/Store/BuyCard/' + cardId, null));
     console.log(x);
   }
 }
