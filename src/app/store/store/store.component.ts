@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
 import { StoreCards } from 'src/app/Models/StoreCards';  // Import the StoreCards class
 import { UserServicesService } from 'src/app/services/user-services.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, map, take, timer } from 'rxjs';
 
 @Component({
   selector: 'app-store',
@@ -13,27 +14,53 @@ export class StoreComponent implements OnInit {
   storeCardsList: StoreCards[] = [];
   money:number = 0;
   storeCard?:StoreCards;
+  newMoney: number = 0; // Add the newMoney variable
+  selectedCard? : StoreCards;
+
+  cardBought = false;
+  stopStealingMyMoney = true;
+
+
+
+
   
   constructor(public storeService: StoreService, public userService:UserServicesService, private snackBar: MatSnackBar) {}
 
   async ngOnInit() {
     this.storeCardsList = await this.storeService.getBuyableCards();
     this.money = await this.userService.getMoney();
-
+    this.newMoney = await this.userService.getMoney();
   }
 
+
+  startCountdown() {
+    
+      while(this.money < this.newMoney){
+        setTimeout(() => {this.newMoney--;},50);
+      }
+      this.stopStealingMyMoney = true;
+    
+  }
 
   //En cours
   async buyCard(cardId:number){
     var argentTexte = localStorage.getItem('money');
     this.money = await this.userService.getMoney();
     if(cardId != null){
-      var selectedCard = this.storeCardsList.find(card => card.id === cardId);
-      if(selectedCard != null){
-        if(this.money >= selectedCard?.buyAmount){
+      this.selectedCard = this.storeCardsList.find(card => card.id === cardId);
+      if(this.selectedCard != null){
+        if(this.money >= this.selectedCard?.buyAmount){
+          this.showSnackbar('The card was sucesfuly bought. Please buy another one')
+          this.cardBought = true;
           await this.storeService.buyCards(cardId);
           this.money = await this.userService.getMoney();
-          this.showSnackbar('The card was sucesfuly bought. Please buy another one')
+          console.log(this.money)
+          console.log(this.newMoney)
+          this.stopStealingMyMoney = false;
+          this.startCountdown(); // Start the countdown
+          setTimeout(async () => {
+            this.cardBought = false;
+          }, 3000);
         }
         else{
           console.log('pauvre')

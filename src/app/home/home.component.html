@@ -16,7 +16,7 @@
   <span style="margin-left: auto;"></span>
   <div style="background-color: #69f0ae; margin-right: 15px; display: flex; align-items: center; border-radius: 10px; width: 100px; justify-content: center;">
     <h1 *ngIf="balance > 0; else noMoney">
-      {{balance}}
+      {{balance}}$
     </h1>
     <ng-template #noMoney><h1>-</h1></ng-template>
   </div>  
