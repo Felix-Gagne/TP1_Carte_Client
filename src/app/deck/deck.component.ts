@@ -18,10 +18,12 @@ export class DeckComponent implements OnInit {
   AllCards : CardDTO[] = [];
   truecardlist : CardDTO[] = [];
   showDeck : boolean = false;
+  deleteDeck : boolean = false;
 
   FakeDeckList : DeckDTO[] = [];
   fakeDeckContent : CardDTO[] = [];
   selectedDeckName : string = "";
+  
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
@@ -63,7 +65,12 @@ export class DeckComponent implements OnInit {
     if (event.target === event.currentTarget) {
         this.showDeck = false;
     }
-}
+  };
+
+  delete(){
+    this.deleteDeck = false;
+    this.showDeck = false;
+  }
 
   async Filtrage(){
 

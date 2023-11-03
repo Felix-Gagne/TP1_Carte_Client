@@ -8,13 +8,14 @@
         display: inline-flex;
         gap: 50px;
         align-items: center;
+        font-weight: 550;
+        text-transform: capitalize;
+        margin-bottom: 40px;
         .deckItem{
-            padding-top: 20px;
-            background-color: black;
             width: 120px;
             height: 180px;
-            border-radius: 10px;
             cursor: pointer;
+            position: relative;
         }
     }
 
@@ -46,22 +47,24 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
     z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.7);
 
     .content{
-        width: 1200px;
+        width: 1500px;
         padding: 20px;
         padding-top: 60px;
         background-color: #696969;
         border-radius: 10px;
         text-align: center;
         position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 30px;
+        justify-items: center;
 
+        .title{
+                font-size: 2rem;
+                text-transform: capitalize;
+                margin-bottom: 30px;
+            }
         .close{
             position: absolute;
             margin-top: 20px;
@@ -71,8 +74,97 @@
             left: 0;
             cursor: pointer;
         }
+        .cardlist{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .delete{
+            background-color: red;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.2rem;
+            width: fit-content;
+            cursor: pointer;
+        }
+        .deleteConfirm{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.7);
+
+            .content{
+                display: flex;
+                flex-direction: column;
+                font-size: 1.5rem;
+                width: 500px;
+                height: 180px;
+                align-content: center;
+                justify-content: center;
+
+                .btns{
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: center;
+                    gap: 40px;
+                }
+            }
+        }
+        .cancel{
+            background-color: grey;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.2rem;
+            width: fit-content;
+            cursor: pointer;
+        }
     }
 }
+.test1{
+    border-radius: 10px;
+    background-color: blue;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+.test2{
+    border-radius: 10px;
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+.test3{
+    border-radius: 10px;
+    background-color: green;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+
+.deckItem:hover .test1 {
+    transform: translateX(-20px) rotate(-5deg); 
+  }
+  
+  .deckItem:hover .test2 {
+    transform: translateY(-10px); 
+  }
+  
+  .deckItem:hover .test3 {
+    transform: translateX(20px) rotate(5deg); 
+  }
 
 .newDeck{
 

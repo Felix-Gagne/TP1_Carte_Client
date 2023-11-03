@@ -3,20 +3,36 @@
   <div class="deckList">
     <div class="deckItem" *ngFor="let item of FakeDeckList" (click)="showDeckContent(item.id)">
       <p>{{item.name}}</p>
+      <div class="test1"></div>
+      <div class="test2"></div>
+      <div class="test3"></div>
     </div>
     <button class="btn"><p>&#43;</p></button>
   </div>
   <div *ngIf="showDeck" class="deckContent" (click)="handleDeckClick($event)">
     <div class="content">
       <div class="close" (click)="showDeck = false">X</div>
-      <p>{{selectedDeckName}}</p>
-      <div *ngFor="let item of fakeDeckContent">
-        <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-        <span style="margin-left: 10px;"></span>
+      <p class="title">{{selectedDeckName}}</p>
+      <div class="cardlist">
+        <div *ngFor="let item of fakeDeckContent">
+          <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
+          <span style="margin-left: 10px;"></span>
+        </div> 
+      </div>
+      <a class="delete" (click)="deleteDeck = true">Supprimer le Deck</a>
+      <div *ngIf="deleteDeck" class="deleteConfirm">
+        <div class="content">
+          <p>Êtes vous sur de vouloir delete ce deck?</p>
+          <div class="btns">
+            <a class="cancel" (click)="deleteDeck = false">Annuler</a>
+            <a class="delete" (click)="delete()">Supprimer le Deck</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Mon Deck</h1></div>
 <div style="padding: 20px; background-color: black;">

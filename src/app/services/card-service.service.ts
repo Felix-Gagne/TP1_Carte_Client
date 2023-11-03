@@ -30,6 +30,10 @@ export class CardServiceService {
     new CardDTO(4, "carte 4", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
     new CardDTO(5, "carte 5", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
     new CardDTO(6, "carte 6", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(7, "carte 7", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(8, "carte 8", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(9, "carte 9", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
+    new CardDTO(10, "carte 10", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
   ];
 
   clickedCard : any;
