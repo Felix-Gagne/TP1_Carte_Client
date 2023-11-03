@@ -5,6 +5,7 @@ import { CardDTO } from '../Models/CardDTO';
 import { FormBuilder } from '@angular/forms';
 import { Data } from '@angular/router';
 import { DeckDTO } from '../Models/DeckDTO';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-deck',
@@ -19,17 +20,23 @@ export class DeckComponent implements OnInit {
   truecardlist : CardDTO[] = [];
   showDeck : boolean = false;
   deleteDeck : boolean = false;
+  newDeck : boolean = false;
+  deckName : string = "";
 
   FakeDeckList : DeckDTO[] = [];
   fakeDeckContent : CardDTO[] = [];
   selectedDeckName : string = "";
+  selectNb : number = 0;
+  selectFull : boolean = true;
+  selectedCards : CardDTO[] = [];
+  maxSelections = 10;
   
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
   selectedFiltreAllCards = "";
 
-  constructor(public cardServiceService: CardServiceService) { }
+  constructor(public cardServiceService: CardServiceService, private snackBar: MatSnackBar) { }
 
   async ngOnInit() {
 
@@ -61,9 +68,56 @@ export class DeckComponent implements OnInit {
 
   }
 
+  closeNewDeck(){
+    this.selectNb = 0;
+    this.selectedCards.length=0;
+    this.newDeck = false;
+    this.deckName = "";
+  }
+
+  addCardToDeck(card:CardDTO){
+    this.selectNb++;
+  }
+
+  addDeck() {
+    console.log(this.deckName);
+    console.log(this.selectedCards.slice());
+    this.closeNewDeck();
+  }
+
+  toggleSelection(card: CardDTO): void {
+    const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard.id === card.id);
+    if (selectedIndex === -1 && this.selectedCards.length < this.maxSelections) {
+      this.selectNb++;
+      this.selectedCards.push(card);
+    } else if (selectedIndex !== -1) {
+      this.selectedCards.splice(selectedIndex, 1);
+      this.selectNb--;
+    }else if (this.selectedCards.length >= this.maxSelections) {
+      this.snackBar.open("Déja 10 cartes choisis!", 'OK', {
+        duration: 3000,
+        panelClass: ['snackbar'],
+      });
+    }
+  }
+  
+  
+  isSelected(card: CardDTO): boolean {
+    return this.selectedCards.some(selectedCard => selectedCard.id === card.id);
+  }  
+  
+  deselectCard(card: CardDTO): void {
+    const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard.id === card.id);
+    if (selectedIndex !== -1) {
+      this.selectedCards.splice(selectedIndex, 1);
+    }
+  }
+  
+
   handleDeckClick(event: Event) {
     if (event.target === event.currentTarget) {
         this.showDeck = false;
+        this.newDeck = false;
     }
   };
 
