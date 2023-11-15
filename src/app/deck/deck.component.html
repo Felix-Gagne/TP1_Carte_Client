@@ -1,7 +1,7 @@
 <div class="deckSelect">
   <h1>Choix de deck</h1>
   <div class="deckList">
-    <div class="deckItem" *ngFor="let item of FakeDeckList" (click)="showDeckContent(item.id)">
+    <div class="deckItem" *ngFor="let item of decks" (click)="showDeckContent(item.id)">
       <p>{{item.name}}</p>
       <div class="test1"></div>
       <div class="test2"></div>
@@ -13,9 +13,9 @@
   <div *ngIf="showDeck" class="deckContent" (click)="handleDeckClick($event)">
     <div class="content">
       <div class="close" (click)="showDeck = false">X</div>
-      <p class="title">{{selectedDeckName}}</p>
+      <p class="title">{{selectedDeck.name}}</p>
       <div class="cardlist">
-        <div *ngFor="let item of fakeDeckContent">
+        <div *ngFor="let item of selectedDeck.cards">
           <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
           <span style="margin-left: 10px;"></span>
         </div> 
@@ -69,24 +69,7 @@
   </div>
 </div>
 
-
-<div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Mon Deck</h1></div>
-<div style="padding: 20px; background-color: black;">
-    <mat-form-field>
-      <mat-label>Select an option</mat-label>
-      <mat-select [(value)]="selectedFiltre">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let f of lesFiltres" [value]="f">{{f}}</mat-option>
-      </mat-select>
-      </mat-form-field>
-
-      <button mat-button (click)="Filtrage()">Filter</button>
-</div>
-<div style="display: inline-flex; padding: 10px;" *ngFor="let item of truecardlist">
-  <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-  <span style="margin-left: 10px;"></span>
-</div>
-<div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Toutes les Cartes</h1></div>
+<div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Mes Cartes</h1></div>
 <div style="padding: 20px; background-color: black;">
   <mat-form-field>
     <mat-label>Select an option</mat-label>

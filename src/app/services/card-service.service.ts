@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Deck } from '../Models/Deck';
+import { DeckDTO } from '../Models/DeckDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class CardServiceService {
 
   AllCards : CardDTO[] = [];
+  decks : Deck[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
 
@@ -22,39 +25,41 @@ export class CardServiceService {
   currentGravetard : any[] = [];
   enemyGraveYard : any[] = [];
 
-
-  fakeCardList : any[] = [
-    new CardDTO(1, "carte 1", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(2, "carte 2", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(3, "carte 3", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(4, "carte 4", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(5, "carte 5", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(6, "carte 6", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(7, "carte 7", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(8, "carte 8", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(9, "carte 9", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-    new CardDTO(10, "carte 10", 3, 4, "https://upload.wikimedia.org/wikipedia/commons/3/35/Basic_human_drawing.png"),
-  ];
-
   clickedCard : any;
 
   animateCardId : number = 0;
 
 constructor(public http : HttpClient) { }
 
-  async getdeck()
+
+  async newDeck(nameInput : string, cardsInput : number[]){ 
+    let deck = new DeckDTO(
+      nameInput,
+      cardsInput
+    );
+
+    let x = await lastValueFrom(this.http.post<DeckDTO>(environment.apiUrl+'api/Deck/CreateDeck', deck));
+    console.log(x);
+  }
+
+  async getDecks()
   {
     let options = { withCredentials : true }
 
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
+    let x = await lastValueFrom(this.http.get<Deck[]>(environment.apiUrl  +"api/Deck/GetDecks"));
     console.log(x);
-    this.cardList = x;
+    this.decks = x;
     console.log(this.currentHand);
-    return this.cardList;
+    return this.decks;
+  }
+
+  async deleteDeck(deckId : number){
+    let x = await lastValueFrom(this.http.delete<number>(environment.apiUrl + "api/Deck/DeleteDeck/" + deckId))
+    console.log(x);
   }
 
   async getAllCards(){
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetAllCards"));
+    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetInventory"));
     console.log(x);
 
     this.AllCards = x;
