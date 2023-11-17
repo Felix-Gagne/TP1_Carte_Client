@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
 
   isLoading : boolean = false;
 
+  balance : number = 0;
+
   catcard = {
     name: "Chat Jedi",
     attack: 2,
@@ -22,8 +24,8 @@ export class HomeComponent implements OnInit {
 
   constructor(public userService : UserServicesService, public matchService : MatchServicesService, public http : HttpClient, public router : Router) { }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.balance = await this.userService.getMoney();
   }
 
   async join()

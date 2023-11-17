@@ -15,6 +15,9 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeckComponent } from './deck/deck.component';
 import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
+import { StoreComponent } from './store/store/store.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [	
@@ -24,7 +27,9 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     CardComponent,
     MatchComponent,
     HomeComponent,
-      DeckComponent
+      DeckComponent,
+      StoreComponent,
+      
    ],
   imports: [
     BrowserModule,
@@ -34,6 +39,7 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
     FormsModule,
     HttpClientModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   providers: [
     {

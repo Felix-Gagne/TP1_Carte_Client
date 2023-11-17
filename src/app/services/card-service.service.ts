@@ -40,9 +40,9 @@ constructor(public http : HttpClient) { }
     return this.cardList;
   }
 
-  async getAllCards(){
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetAllCards"));
-    console.log(x);
+  async getInventory(){
+    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetInventory"));
+    console.log("Sa part" + x);
 
     this.AllCards = x;
     return this.AllCards;
