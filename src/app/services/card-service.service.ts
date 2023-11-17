@@ -36,12 +36,13 @@ constructor(public http : HttpClient) { }
     let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
     console.log(x);
     this.cardList = x;
-    console.log(this.currentHand);
+    console.log(this.cardList)
     return this.cardList;
   }
 
   async getInventory(){
     let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetInventory"));
+    console.log(x);
     console.log("Sa part" + x);
 
     this.AllCards = x;

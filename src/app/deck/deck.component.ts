@@ -16,17 +16,28 @@ export class DeckComponent implements OnInit {
   mecards : CardDTO[] = [];
   AllCards : CardDTO[] = [];
   truecardlist : CardDTO[] = [];
+  infoUneCarte ?: CardDTO;
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
   selectedFiltreAllCards = "";
 
+  infoCard:boolean = false;
+
   constructor(public cardServiceService: CardServiceService) { }
 
   async ngOnInit() {
-    this.truecardlist = await this.cardServiceService.getdeck();
-
     this.AllCards = await this.cardServiceService.getInventory();
+  }
+
+  afficherCarte(carte:CardDTO){
+    this.infoCard = true;
+    console.log(this.infoCard)
+    if(carte!= null){
+      this.infoUneCarte = carte;
+      console.log(this.infoUneCarte.name);
+      console.log(this.infoUneCarte);
+    }
   }
 
   async Filtrage(){
@@ -62,4 +73,14 @@ export class DeckComponent implements OnInit {
       }
     }
   }
+
+  close(){
+    this.infoCard = false;
+  }
+
+  handleDeckClickcard(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.infoCard = false;
+    }
+  };
 }

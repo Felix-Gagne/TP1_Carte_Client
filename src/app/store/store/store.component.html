@@ -10,10 +10,10 @@
           <h1 class="argent-nombre countdown-value" [class.decreasing]="money < newMoney">
           {{newMoney}}$
           </h1>
+          <div class="minus">
+            - {{selectedCard?.buyAmount}} $
+          </div>
         </ng-template>
-      </div>
-      <div class="minus">
-        - {{selectedCard?.buyAmount}} $
       </div>
     </div>  
     <h1 style="text-align: center">New cards</h1>

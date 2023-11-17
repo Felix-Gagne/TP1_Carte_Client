@@ -28,6 +28,22 @@
 </div>
 
 <div style="display: inline-flex; padding: 10px;" *ngFor="let item of AllCards">
-  <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-  <span style="margin-left: 10px;"></span>
+  <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name" (click)="afficherCarte(item)"></app-card>
+</div>
+
+<div *ngIf="infoCard === true && infoUneCarte">
+  <div class="newDeck" (click)="handleDeckClickcard($event)">
+    <div class="content">
+      <h1 class="titre">{{infoUneCarte.name}}</h1>
+      <app-card style="color: black;" class="cardStyle" [attack]="infoUneCarte.attack" [defense]="infoUneCarte.defense" [imageUrl]="infoUneCarte.imageUrl" [health]="infoUneCarte.defense" [name]="infoUneCarte.name"></app-card>
+      <div class="boutonEspacement">
+        <button  class="boutonPersonaliser">
+          Vendre
+        </button>
+        <button  class="boutonPersonaliser" (click)="close()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

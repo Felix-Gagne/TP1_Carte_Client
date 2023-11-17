@@ -36,4 +36,12 @@ export class StoreService {
     let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/Store/BuyCard/' + cardId, null));
     console.log(x);
   }
+
+  async sellCard(cardId:number){
+
+    const requestBody = {
+      cardId: cardId
+    };
+    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/Store/SellCard/' + cardId, null));
+  }
 }
