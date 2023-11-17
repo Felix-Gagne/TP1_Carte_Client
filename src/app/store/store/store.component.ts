@@ -34,11 +34,20 @@ export class StoreComponent implements OnInit {
 
 
   startCountdown() {
+      console.log(this.money + "money")
+      console.log(this.newMoney + "new money")
+      const countdown = () => {
+        if (this.money < this.newMoney) {
+          setTimeout(() => {
+            this.newMoney--;
+            countdown();
+          }, 10);
+        } else {
+          this.stopStealingMyMoney = true;
+        }
+      };
     
-      while(this.money < this.newMoney){
-        setTimeout(() => {this.newMoney--;},50);
-      }
-      this.stopStealingMyMoney = true;
+      countdown();
     
   }
 
@@ -54,8 +63,6 @@ export class StoreComponent implements OnInit {
           this.cardBought = true;
           await this.storeService.buyCards(cardId);
           this.money = await this.userService.getMoney();
-          console.log(this.money)
-          console.log(this.newMoney)
           this.stopStealingMyMoney = false;
           this.startCountdown(); // Start the countdown
           setTimeout(async () => {
