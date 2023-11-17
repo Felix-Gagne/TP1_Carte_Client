@@ -22,6 +22,7 @@ export class DeckComponent implements OnInit {
   deleteDeck : boolean = false;
   newDeck : boolean = false;
   deckName : string = "";
+  editingDeck : boolean = false;
 
   decks : Deck[] = [];
   selectedDeck! : Deck;
@@ -42,7 +43,7 @@ export class DeckComponent implements OnInit {
     this.AllCards = await this.cardServiceService.getAllCards();
   }
 
-
+ 
   showDeckContent(id:number){
     this.decks.forEach(deck => {
       if(deck.id == id){
@@ -53,11 +54,26 @@ export class DeckComponent implements OnInit {
           console.log(c.card);
           this.selectedDeck.cards.push(c.card);
         });
-        console.log(deck.cards);
       this.showDeck = true;
       }
     });
 
+  }
+
+  editDeck(){
+    this.editingDeck  = !this.editingDeck;
+    this.AllCards.forEach(card =>{
+      this.selectedDeck.cards.forEach(deckCard =>{
+        if(card.id == deckCard.id){
+          this.selectedCards.push(card.id);
+        }
+      })
+    })
+    console.log(this.editingDeck);
+  }
+  saveDeck(){
+    this.editingDeck = false;
+    this.showDeck = false;
   }
 
   closeNewDeck(){
@@ -72,11 +88,15 @@ export class DeckComponent implements OnInit {
   }
 
   async addDeck() {
-    console.log(this.deckName);
-    console.log(this.selectedCards.slice());
-    await this.cardServiceService.newDeck(this.deckName, this.selectedCards);
-    this.decks = await this.cardServiceService.getDecks();
-    this.closeNewDeck();
+    if(this.deckName == ""){
+
+    }else{
+      console.log(this.deckName);
+      console.log(this.selectedCards.slice());
+      await this.cardServiceService.newDeck(this.deckName, this.selectedCards);
+      this.decks = await this.cardServiceService.getDecks();
+      this.closeNewDeck();
+    }
   }
 
   toggleSelection(card: CardDTO): void {
@@ -112,6 +132,8 @@ export class DeckComponent implements OnInit {
     if (event.target === event.currentTarget) {
         this.showDeck = false;
         this.newDeck = false;
+        this.selectedCards = [];
+        this.editingDeck = false;
     }
   };
 

@@ -14,13 +14,33 @@
     <div class="content">
       <div class="close" (click)="showDeck = false">X</div>
       <p class="title">{{selectedDeck.name}}</p>
-      <div class="cardlist">
-        <div *ngFor="let item of selectedDeck.cards">
-          <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-          <span style="margin-left: 10px;"></span>
-        </div> 
+      <div (click)="editDeck()" class="editBtn"><i class="fas fa-pen"></i></div>
+      <div class="test">
+        <div class="cardlist" *ngIf="!editingDeck">
+          <div *ngFor="let item of selectedDeck.cards">
+            <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
+            
+          </div> 
+        </div>
+        <div class="cardListEdit" *ngIf="editingDeck">
+          <div *ngFor="let item of AllCards"
+               [ngClass]="{ 'selected': isSelected(item) }"
+               (click)="toggleSelection(item)">
+            <div class="card-wrapper">
+              <app-card style="color: black;"
+                        [attack]="item.attack"
+                        [defense]="item.defense"
+                        [imageUrl]="item.imageUrl"
+                        [health]="item.defense"
+                        [name]="item.name">
+              </app-card>
+              <div class="green-border" *ngIf="isSelected(item)"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <a class="delete" (click)="deleteDeck = true">Supprimer le Deck</a>
+      <div class="enregistrer testBTN" (click)="saveDeck()" *ngIf="editingDeck" >Enregistrer le Deck</div>
+      <div class="delete testBTN" (click)="deleteDeck = true" *ngIf="!editingDeck" >Supprimer le Deck</div>
       <div *ngIf="deleteDeck" class="deleteConfirm">
         <div class="content">
           <p>Êtes vous sur de vouloir delete ce deck?</p>
@@ -39,8 +59,10 @@
       <p class="title">Créer un nouveau Deck</p>
       <div class="form">
         <div>
-          <label matInput for="deckName">Nom du Deck:</label>
-          <input [(ngModel)]="deckName" type="text" id="deckName" name="deckName">
+          <mat-form-field style="width: 100%">
+            <input matInput type="text" placeholder="Nom du Deck" id="deckName" name="deckName" [(ngModel)]="deckName">
+          </mat-form-field>
+          
         </div>
         <p class="selectNb"><span [ngStyle]="{ color: selectNb == 10 ? 'rgb(0, 211, 0)' : 'white' }">{{selectNb}}</span> / 10</p>
       </div>

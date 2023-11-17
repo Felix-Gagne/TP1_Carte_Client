@@ -52,28 +52,79 @@
 
     .content{
         width: 80%;
+        height: 85%;
         padding: 20px;
         padding-top: 60px;
         background-color: #696969;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
         text-align: center;
         position: relative;
         justify-items: center;
+        align-items: center;
 
         .title{
-                font-size: 2rem;
-                text-transform: capitalize;
-                margin-bottom: 30px;
+            font-size: 2rem;
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+        .editBtn{
+            position: absolute;
+            margin-top: 40px;
+            margin-right: 100px;
+            right: 0;
+            top: 0;
+            color: white;
+            background-color: green;
+            padding: 10px;
+            font-size: 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .test{
+            height: 90%;
+            margin-left: 20px;
+            margin-right: 20px;
+            overflow: auto;
+
+            .cardlist{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px;
+                margin-bottom: 20px;
             }
-        .cardlist{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            .cardListEdit{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px;
+            }
+            .selectNb{
+                font-size: 2rem;
+                color: rgb(0, 211, 0);
+                font-weight: 600;
+            }
+        }
+        
+        .testBTN{
+            margin-top: 20px;
+            align-self: center;
+            justify-self: center;
+            cursor: pointer;
         }
         .delete{
             background-color: red;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.2rem;
+            width: fit-content;
+            cursor: pointer;
+        }
+        .enregistrer{
+            background-color: green;
             border-radius: 10px;
             padding: 15px;
             font-size: 1.2rem;
@@ -250,5 +301,5 @@
   
 
   .snackbar{
-    z-index: 99999;
+    z-index: 999999;
   }
