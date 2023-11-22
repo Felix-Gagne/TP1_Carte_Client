@@ -1,0 +1,107 @@
+.background{
+    background-color: rgba(4, 9, 12, 0.486);
+     padding: 2%; 
+     margin: 3%;
+     border-radius: 10px;
+}
+
+.argent{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-left: auto;
+    margin-right: 15px; 
+}
+
+.argent-background{
+    background-color: #69f0ae; 
+    align-items: center;
+    border-radius: 10px; 
+    width: 100px; 
+    text-align: center;
+}
+
+.argent-nombre{
+  color: black; 
+  margin: 0;
+}
+
+.minus{
+    color: red;
+    transition: 0.5s ease-in;
+}
+
+
+.newDeck{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background-color: rgba(0, 0, 0, 0.7);
+    .content{
+        align-items: center;
+        position: relative;
+        background-color: grey;
+        width: 30%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        align-content: center;
+        justify-content: center;
+        gap: 80px;
+       
+    }
+
+    .cardStyle {
+        scale: 1.5;
+        border: 5px solid rgb(0, 0, 0); /* Add a border to the card */
+        border-radius: 40px; /* Add border-radius for rounded corners */
+        overflow: hidden; /* Ensure the border doesn't extend beyond the card */
+      }
+
+     
+}
+
+.boutonEspacement{
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+
+    
+}
+
+.boutonPersonaliser{
+    width: 125px;
+    height: 35px;
+    font-weight: 800;
+    background-color: black;
+    color: wheat;
+    border: 2px solid;
+    box-shadow: 5px 5px 5px;
+}
+
+.boutonPersonaliser:hover{
+    transition: 0.5s;
+    width: 125px;
+    font-weight: 800;
+    height: 35px;
+    background-color: wheat;
+    color: black;
+    border: 2px solid;
+    box-shadow: 5px 5px 5px;
+}
+
+.titre{
+    font-weight: 700;
+    font-size: 32px;
+    color: black;
+    text-shadow: 2px 2px #ffecec;
+
+  }

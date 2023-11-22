@@ -1,3 +1,18 @@
+<div class="argent">
+  <div class="argent-background">
+    <h1 class="argent-nombre countdown-value" *ngIf="stopStealingMyMoney === true; else noMoney">
+      {{money}}$
+    </h1>
+    <ng-template #noMoney>
+      <h1 class="argent-nombre countdown-value" [class.decreasing]="money < newMoney">
+      {{money}}$
+      </h1>
+      <div class="minus">
+        + {{infoUneCarte?.card?.prixVente}} $
+      </div>
+    </ng-template>
+  </div>
+</div>  
 <div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Mon Deck</h1></div>
 <div style="padding: 20px; background-color: black;">
     <mat-form-field>
@@ -10,10 +25,7 @@
 
       <button mat-button (click)="Filtrage()">Filter</button>
 </div>
-<div style="display: inline-flex; padding: 10px;" *ngFor="let item of truecardlist">
-  <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-  <span style="margin-left: 10px;"></span>
-</div>
+
 <div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Inventaire</h1></div>
 <div style="padding: 20px; background-color: black;">
   <mat-form-field>
@@ -28,6 +40,22 @@
 </div>
 
 <div style="display: inline-flex; padding: 10px;" *ngFor="let item of AllCards">
-  <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [name]="item.name"></app-card>
-  <span style="margin-left: 10px;"></span>
+  <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [name]="item.card.name" (click)="afficherCarte(item)"></app-card>
+</div>
+
+<div *ngIf="infoCard === true && infoUneCarte">
+  <div class="newDeck" (click)="handleDeckClickcard($event)">
+    <div class="content">
+      <h1 class="titre">{{infoUneCarte.card.name}}</h1>
+      <app-card style="color: black;" class="cardStyle" [attack]="infoUneCarte.card.attack" [defense]="infoUneCarte.card.defense" [imageUrl]="infoUneCarte.card.imageUrl" [health]="infoUneCarte.card.defense" [name]="infoUneCarte.card.name"></app-card>
+      <div class="boutonEspacement">
+        <button  class="boutonPersonaliser" (click)="vendreCarte(infoUneCarte)">
+          Vendre
+        </button>
+        <button  class="boutonPersonaliser" (click)="close()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
