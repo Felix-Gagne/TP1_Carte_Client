@@ -3,13 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { InventoryOwnedCards } from '../Models/inventoryCards';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardServiceService {
 
-  AllCards : CardDTO[] = [];
+  AllCards : InventoryOwnedCards[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
 
@@ -41,11 +42,13 @@ constructor(public http : HttpClient) { }
   }
 
   async getInventory(){
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetInventory"));
+    let x = await lastValueFrom(this.http.get<InventoryOwnedCards[]>(environment.apiUrl  +"api/Deck/GetInventory"));
+    console.log('inventaire du joueur en dessous');
     console.log(x);
-    console.log("Sa part" + x);
-
-    this.AllCards = x;
+    
+    this.AllCards = x;    
+    console.log('En dessous c est la liste de carte que nous avons remplie');
+    console.log(this.AllCards);
     return this.AllCards;
   }
 
@@ -55,7 +58,7 @@ constructor(public http : HttpClient) { }
     let queryParams = new HttpParams();
     queryParams = queryParams.append("filtrechoisi",filtrechoisi);
 
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
+    let x = await lastValueFrom(this.http.get<InventoryOwnedCards[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
     console.log(x);
 
     this.AllCards = x;

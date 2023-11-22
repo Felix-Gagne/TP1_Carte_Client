@@ -1,3 +1,38 @@
+.background{
+    background-color: rgba(4, 9, 12, 0.486);
+     padding: 2%; 
+     margin: 3%;
+     border-radius: 10px;
+}
+
+.argent{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-left: auto;
+    margin-right: 15px; 
+}
+
+.argent-background{
+    background-color: #69f0ae; 
+    align-items: center;
+    border-radius: 10px; 
+    width: 100px; 
+    text-align: center;
+}
+
+.argent-nombre{
+  color: black; 
+  margin: 0;
+}
+
+.minus{
+    color: red;
+    transition: 0.5s ease-in;
+}
+
+
 .newDeck{
     display: flex;
     justify-content: center;

@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     var user = localStorage.getItem("userId");
-    if(user !=null){
+    console.log('Ce user est connecter :' + user);
+    if(user != null){
       this.balance = await this.userService.getMoney();
     }
   }
