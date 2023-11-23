@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { CardDTO } from '../Models/CardDTO';
 import { FormBuilder } from '@angular/forms';
 import { Data } from '@angular/router';
+import { InventoryOwnedCards } from '../Models/inventoryCards';
+import { StoreService } from '../services/store.service';
+import { UserServicesService } from '../services/user-services.service';
 import { Deck } from '../Models/Deck';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -14,10 +17,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DeckComponent implements OnInit {
 
-  cardList : CardDTO[] = [];
-  mecards : CardDTO[] = [];
-  AllCards : CardDTO[] = [];
-  truecardlist : CardDTO[] = [];
+  cardList : InventoryOwnedCards[] = [];
+  mecards : InventoryOwnedCards[] = [];
+  AllCards : InventoryOwnedCards[] = [];
+  truecardlist : InventoryOwnedCards[] = [];
+  infoUneCarte ?: InventoryOwnedCards;
   showDeck : boolean = false;
   deleteDeck : boolean = false;
   newDeck : boolean = false;
@@ -36,8 +40,11 @@ export class DeckComponent implements OnInit {
   selectedFiltre = "";
   selectedFiltreAllCards = "";
 
-  constructor(public cardServiceService: CardServiceService, private snackBar: MatSnackBar) { }
+  infoCard:boolean = false;
 
+  money:number = 0;
+  newMoney: number = 0;
+  stopStealingMyMoney = true;
   async ngOnInit() {
     this.decks = await this.cardServiceService.getDecks();
     this.AllCards = await this.cardServiceService.getAllCards();
@@ -58,6 +65,7 @@ export class DeckComponent implements OnInit {
       }
     });
 
+  constructor(public cardServiceService: CardServiceService, public sellCard: StoreService, public userService: UserServicesService) { }
   }
 
   editDeck(){
@@ -154,4 +162,14 @@ export class DeckComponent implements OnInit {
       }
     }
   }
+
+  close(){
+    this.infoCard = false;
+  }
+
+  handleDeckClickcard(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.infoCard = false;
+    }
+  };
 }

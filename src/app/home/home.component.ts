@@ -12,6 +12,8 @@ import { Router, RouterModule } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   isLoading : boolean = false;
+  userIsConnected : boolean = false;
+  balance : number = 0;
 
   catcard = {
     name: "Chat Jedi",
@@ -22,8 +24,12 @@ export class HomeComponent implements OnInit {
 
   constructor(public userService : UserServicesService, public matchService : MatchServicesService, public http : HttpClient, public router : Router) { }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    var user = localStorage.getItem("userId");
+    console.log('Ce user est connecter :' + user);
+    if(user != null){
+      this.balance = await this.userService.getMoney();
+    }
   }
 
   async join()

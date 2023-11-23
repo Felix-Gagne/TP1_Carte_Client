@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { InventoryOwnedCards } from '../Models/inventoryCards';
 import { Deck } from '../Models/Deck';
 import { DeckDTO } from '../Models/DeckDTO';
 
@@ -11,7 +12,7 @@ import { DeckDTO } from '../Models/DeckDTO';
 })
 export class CardServiceService {
 
-  AllCards : CardDTO[] = [];
+  AllCards : InventoryOwnedCards[] = [];
   decks : Deck[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
@@ -48,21 +49,19 @@ constructor(public http : HttpClient) { }
 
     let x = await lastValueFrom(this.http.get<Deck[]>(environment.apiUrl  +"api/Deck/GetDecks"));
     console.log(x);
-    this.decks = x;
-    console.log(this.currentHand);
-    return this.decks;
+    this.cardList = x;
+    console.log(this.cardList)
+    return this.cardList;
   }
 
-  async deleteDeck(deckId : number){
-    let x = await lastValueFrom(this.http.delete<number>(environment.apiUrl + "api/Deck/DeleteDeck/" + deckId))
+  async getInventory(){
+    let x = await lastValueFrom(this.http.get<InventoryOwnedCards[]>(environment.apiUrl  +"api/Deck/GetInventory"));
+    console.log('inventaire du joueur en dessous');
     console.log(x);
-  }
-
-  async getAllCards(){
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetInventory"));
-    console.log(x);
-
-    this.AllCards = x;
+    
+    this.AllCards = x;    
+    console.log('En dessous c est la liste de carte que nous avons remplie');
+    console.log(this.AllCards);
     return this.AllCards;
   }
 
@@ -72,7 +71,7 @@ constructor(public http : HttpClient) { }
     let queryParams = new HttpParams();
     queryParams = queryParams.append("filtrechoisi",filtrechoisi);
 
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
+    let x = await lastValueFrom(this.http.get<InventoryOwnedCards[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
     console.log(x);
 
     this.AllCards = x;

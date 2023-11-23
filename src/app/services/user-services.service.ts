@@ -33,12 +33,30 @@ export class UserServicesService {
     );
     
     let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/Login', loginDTO));
+    console.log(x);
     console.log(x.id);
     localStorage.setItem('userId', x.id);
+    localStorage.setItem('username', username);
   }
 
+
+
   async signOut(){
-    let x = await lastValueFrom(this.http.post<any>(environment.apiUrl+'api/User/SignOut', null));
+    let x = await lastValueFrom(this.http.post<any>('https://localhost:7219/api/User/SignOut', null));
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
     console.log(x);
+  }
+
+  async getMoney(){
+    var user = localStorage.getItem('userId');
+    console.log(user)
+    if(user != null){
+      let x = await lastValueFrom(this.http.get<number>(environment.apiUrl+'api/User/GetMoney'));
+      console.log(x);
+      var nombre = x.toString();
+      return x;
+    }
+    return 0;
   }
 }

@@ -1,0 +1,49 @@
+
+<div>
+  <div class="background">
+    <div class="argent">
+      <div class="argent-background">
+        <h1 class="argent-nombre countdown-value" *ngIf="stopStealingMyMoney === true; else noMoney">
+          {{money}}$
+        </h1>
+        <ng-template #noMoney>
+          <h1 class="argent-nombre countdown-value" [class.decreasing]="money < newMoney">
+          {{newMoney}}$
+          </h1>
+          <div class="minus">
+            - {{selectedCard?.buyAmount}} $
+          </div>
+        </ng-template>
+      </div>
+    </div>  
+    <h1 style="text-align: center">New cards</h1>
+    <div style="text-align: center">
+      <ul class="horizontal-list">
+        <li *ngFor="let card of storeCardsList">
+            <div style="display: inline-flex; padding: 10px; flex-direction: column;">
+              <app-card
+                style="color: black;"
+                [attack]="card.card.attack"
+                [defense]="card.card.defense"
+                [imageUrl]="card.card.imageUrl"
+                [health]="card.card.defense"
+                [name]="card.card.name"
+              ></app-card>
+              <button class="btn" (click)="buyCard(card.id)">
+                Acheter pour {{card.buyAmount}}
+              </button>
+              <span style="margin-left: 10px;"></span>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="test" [ngClass]="{'pyro': cardBought}">
+  <div class="before"></div>
+  <div class="after"></div>
+</div>
+
+
+

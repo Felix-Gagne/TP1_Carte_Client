@@ -4,5 +4,6 @@ export class CardDTO{
         public name : string,
         public attack : number,
         public defense : number,
+        public prixVente : number,
         public imageUrl : string){}
 }
