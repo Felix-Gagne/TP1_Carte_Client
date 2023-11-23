@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { InventoryOwnedCards } from '../Models/inventoryCards';
 import { Deck } from '../Models/Deck';
 import { DeckDTO } from '../Models/DeckDTO';
+import { EditDeckDTO } from '../Models/EditDeckDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,18 @@ constructor(public http : HttpClient) { }
     );
 
     let x = await lastValueFrom(this.http.post<DeckDTO>(environment.apiUrl+'api/Deck/CreateDeck', deck));
+    console.log("New deck:");
+    console.log(x);
+  }
+
+  async editDeck(name : string, cardsInput : InventoryOwnedCards[], id : number){
+    let editDeck = new EditDeckDTO(
+      name,
+      cardsInput
+    );
+
+    let x = await lastValueFrom(this.http.put<EditDeckDTO>(environment.apiUrl+'api/Deck/EditDeck/' + id, editDeck));
+    console.log("Edit deck:");
     console.log(x);
   }
 
@@ -48,10 +61,10 @@ constructor(public http : HttpClient) { }
     let options = { withCredentials : true }
 
     let x = await lastValueFrom(this.http.get<Deck[]>(environment.apiUrl  +"api/Deck/GetDecks"));
+    console.log("Get decks:");
     console.log(x);
-    this.cardList = x;
-    console.log(this.cardList)
-    return this.cardList;
+    this.decks = x;
+    return x;
   }
 
   async getInventory(){
@@ -63,6 +76,11 @@ constructor(public http : HttpClient) { }
     console.log('En dessous c est la liste de carte que nous avons remplie');
     console.log(this.AllCards);
     return this.AllCards;
+  }
+
+  async deleteDeck(deckId : number){
+    let x = await lastValueFrom(this.http.delete<number>(environment.apiUrl + "api/Deck/DeleteDeck/" + deckId))
+    console.log(x);
   }
 
   async getFilteredCards(filtrechoisi : string){

@@ -45,27 +45,32 @@ export class DeckComponent implements OnInit {
   money:number = 0;
   newMoney: number = 0;
   stopStealingMyMoney = true;
+
+  constructor(public cardServiceService: CardServiceService, public sellCard: StoreService, public userService: UserServicesService, private snackBar: MatSnackBar) { }
+
+
   async ngOnInit() {
     this.decks = await this.cardServiceService.getDecks();
-    this.AllCards = await this.cardServiceService.getAllCards();
+    this.AllCards = await this.cardServiceService.getInventory();
+    this.money = await this.userService.getMoney();
+    this.newMoney = await this.userService.getMoney();
   }
 
  
   showDeckContent(id:number){
     this.decks.forEach(deck => {
       if(deck.id == id){
+        console.log(deck);
+        this.selectedDeck = deck;
+        /*
         this.selectedDeck = {...deck};
         this.selectedDeck.cards = [];
-        console.log(deck.cards);
         deck.cards.forEach(c => {
-          console.log(c.card);
           this.selectedDeck.cards.push(c.card);
-        });
+        });*/
       this.showDeck = true;
       }
     });
-
-  constructor(public cardServiceService: CardServiceService, public sellCard: StoreService, public userService: UserServicesService) { }
   }
 
   editDeck(){
@@ -107,7 +112,7 @@ export class DeckComponent implements OnInit {
     }
   }
 
-  toggleSelection(card: CardDTO): void {
+  toggleSelection(card: InventoryOwnedCards): void {
     const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard === card.id);
     if (selectedIndex === -1 && this.selectedCards.length < this.maxSelections) {
       this.selectNb++;
@@ -124,11 +129,11 @@ export class DeckComponent implements OnInit {
   }
   
   
-  isSelected(card: CardDTO): boolean {
+  isSelected(card: InventoryOwnedCards): boolean {
     return this.selectedCards.some(selectedCard => selectedCard === card.id);
   }  
   
-  deselectCard(card: CardDTO): void {
+  deselectCard(card: InventoryOwnedCards): void {
     const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard === card.id);
     if (selectedIndex !== -1) {
       this.selectedCards.splice(selectedIndex, 1);
@@ -140,6 +145,7 @@ export class DeckComponent implements OnInit {
     if (event.target === event.currentTarget) {
         this.showDeck = false;
         this.newDeck = false;
+        this.selectNb = 0;
         this.selectedCards = [];
         this.editingDeck = false;
     }
@@ -172,4 +178,59 @@ export class DeckComponent implements OnInit {
         this.infoCard = false;
     }
   };
+
+
+
+
+
+  
+  afficherCarte(carte:InventoryOwnedCards){
+    this.infoCard = true;
+    console.log(this.infoCard)
+    if(carte!= null){
+      this.infoUneCarte = carte;
+      //console.log(this.infoUneCarte.name);
+      console.log(this.infoUneCarte);
+    }
+  }
+
+  async vendreCarte(carte:InventoryOwnedCards){
+    console.log(carte);
+    var userId = localStorage.getItem('userId');
+    console.log(userId);
+    if(userId!=null){
+      if(carte != null){
+        await this.sellCard.sellCard(carte.id);
+        this.decks = await this.cardServiceService.getDecks();
+        this.AllCards = await this.cardServiceService.getInventory();
+        console.log('liste de carte apres la vente');
+        console.log(this.AllCards);
+        this.stopStealingMyMoney = false;
+        this.startCountdown(carte.card);
+        this.infoCard = false;
+      }
+    }
+  }
+
+  startCountdown(card:CardDTO) {
+    console.log(card);
+    console.log(card.name);
+    console.log(card.prixVente);
+    console.log(this.money + "money")
+    console.log(this.newMoney + "new money")
+    this.newMoney += card.prixVente;
+    const countdown = () => {
+      if (this.money < this.newMoney) {
+        setTimeout(() => {
+          this.money++;
+          countdown();
+        }, 10);
+      } else {
+        this.stopStealingMyMoney = true;
+      }
+    };
+  
+    countdown();
+  }
+
 }
