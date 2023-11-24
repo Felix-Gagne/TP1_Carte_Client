@@ -104,17 +104,25 @@ export class MatchComponent implements OnInit {
     if(this.isCurrentTurn){
       this.playingCard = true;
       var cardName = await this.serviceCard.clickedCard;
-      let cardId = this.serviceCard.cardList.find((card : any) => card.name === cardName);
+      var cardID;
+      for (var card of this.serviceCard.currentHand) {
+        if (card.name === cardName) {
+            cardID = card.id;
+            break; // Assuming each card has a unique name, exit the loop once found
+        }
+    }
       console.log("card depuis match: " + cardName);
-      console.log("card id: " + cardId?.id);
+      console.log(this.serviceCard.currentHand);
+      console.log("card id: " + cardID);      
+      console.log("card id: ne marche pas");
       console.log(match.match.playerDataA.cardsPile);
       console.log(this.serviceCard.playableCards);
-      console.log("id de la carte joué" + cardId);
+      console.log("id de la carte joué" + cardID);
       console.log(match);
       match.match.playerDataA.cardsPile.splice();
 
-      if(cardId != undefined){
-        let result = await this.service.playCard(match.match.id, cardId?.id);
+      if(cardID != undefined){
+        let result = await this.service.playCard(match.match.id, cardID);
         this.processEvents(result);
       }
 
@@ -158,6 +166,7 @@ export class MatchComponent implements OnInit {
     }
     else if(event.$type == "PlayCard"){
       console.log("playcard");
+      console.log(match);
     }
     else if(event.$type =="PlayerTurn"){
       console.log("Current player: " + this.playerId.id + "\nPlayerTurnEvent id : " + event.PlayerId);
