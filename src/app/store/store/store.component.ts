@@ -17,6 +17,10 @@ export class StoreComponent implements OnInit {
   newMoney: number = 0; // Add the newMoney variable
   selectedCard? : StoreCards;
 
+  cards : boolean = true;
+  packs : boolean = false;
+  cases : boolean = false;
+
   cardBought = false;
   stopStealingMyMoney = true;
 
@@ -32,6 +36,21 @@ export class StoreComponent implements OnInit {
     this.newMoney = await this.userService.getMoney();
   }
 
+  selectStore(id : number){
+    if(id==1){
+      this.packs = false;
+      this.cases = false;
+      this.cards = true;
+    }else if(id==2){
+      this.cards = false;
+      this.cases = false;
+      this.packs = true;
+    }else if(id==3){
+      this.cards = false;
+      this.packs = false;
+      this.cases = true;
+    }
+  }
 
   startCountdown() {
       console.log(this.money + "money")
