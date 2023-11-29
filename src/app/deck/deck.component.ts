@@ -7,6 +7,8 @@ import { Data } from '@angular/router';
 import { InventoryOwnedCards } from '../Models/inventoryCards';
 import { StoreService } from '../services/store.service';
 import { UserServicesService } from '../services/user-services.service';
+import { Deck } from '../Models/Deck';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-deck',
@@ -20,6 +22,19 @@ export class DeckComponent implements OnInit {
   AllCards : InventoryOwnedCards[] = [];
   truecardlist : InventoryOwnedCards[] = [];
   infoUneCarte ?: InventoryOwnedCards;
+  showDeck : boolean = false;
+  deleteDeck : boolean = false;
+  newDeck : boolean = false;
+  deckName : string = "";
+  editingDeck : boolean = false;
+
+  decks : Deck[] = [];
+  selectedDeck! : Deck;
+  selectNb : number = 0;
+  selectFull : boolean = true;
+  selectedCards : number[] = [];
+  maxSelections = 10;
+  
 
   lesFiltres = ["Attack", "Defense", "Name"];
   selectedFiltre = "";
@@ -31,18 +46,144 @@ export class DeckComponent implements OnInit {
   newMoney: number = 0;
   stopStealingMyMoney = true;
 
+  constructor(public cardServiceService: CardServiceService, public sellCard: StoreService, public userService: UserServicesService, private snackBar: MatSnackBar) { }
 
-  constructor(public cardServiceService: CardServiceService, public sellCard: StoreService, public userService: UserServicesService) { }
 
   async ngOnInit() {
-    console.log('merde');
+    this.decks = await this.cardServiceService.getDecks();
     this.AllCards = await this.cardServiceService.getInventory();
-    console.log('merde');
-    console.log(this.AllCards);
     this.money = await this.userService.getMoney();
     this.newMoney = await this.userService.getMoney();
   }
 
+ 
+  showDeckContent(id:number){
+    this.decks.forEach(deck => {
+      if(deck.id == id){
+        console.log(deck);
+        this.selectedDeck = deck;
+        /*
+        this.selectedDeck = {...deck};
+        this.selectedDeck.cards = [];
+        deck.cards.forEach(c => {
+          this.selectedDeck.cards.push(c.card);
+        });*/
+      this.showDeck = true;
+      }
+    });
+  }
+
+  editDeck(){
+    this.editingDeck  = !this.editingDeck;
+    this.AllCards.forEach(card =>{
+      this.selectedDeck.cards.forEach(deckCard =>{
+        if(card.id == deckCard.id){
+          this.selectedCards.push(card.id);
+        }
+      })
+    })
+    console.log(this.editingDeck);
+  }
+  saveDeck(){
+    this.editingDeck = false;
+    this.showDeck = false;
+  }
+
+  closeNewDeck(){
+    this.selectNb = 0;
+    this.selectedCards.length=0;
+    this.newDeck = false;
+    this.deckName = "";
+  }
+
+  addCardToDeck(card:CardDTO){
+    this.selectNb++;
+  }
+
+  async addDeck() {
+    if(this.deckName == ""){
+
+    }else{
+      console.log(this.deckName);
+      console.log(this.selectedCards.slice());
+      await this.cardServiceService.newDeck(this.deckName, this.selectedCards);
+      this.decks = await this.cardServiceService.getDecks();
+      this.closeNewDeck();
+    }
+  }
+
+  toggleSelection(card: InventoryOwnedCards): void {
+    const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard === card.id);
+    if (selectedIndex === -1 && this.selectedCards.length < this.maxSelections) {
+      this.selectNb++;
+      this.selectedCards.push(card.id);
+    } else if (selectedIndex !== -1) {
+      this.selectedCards.splice(selectedIndex, 1);
+      this.selectNb--;
+    }else if (this.selectedCards.length >= this.maxSelections) {
+      this.snackBar.open("Déja 10 cartes choisis!", 'OK', {
+        duration: 3000,
+        panelClass: ['snackbar'],
+      });
+    }
+  }
+  
+  
+  isSelected(card: InventoryOwnedCards): boolean {
+    return this.selectedCards.some(selectedCard => selectedCard === card.id);
+  }  
+  
+  deselectCard(card: InventoryOwnedCards): void {
+    const selectedIndex = this.selectedCards.findIndex(selectedCard => selectedCard === card.id);
+    if (selectedIndex !== -1) {
+      this.selectedCards.splice(selectedIndex, 1);
+    }
+  }
+  
+
+  handleDeckClick(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.showDeck = false;
+        this.newDeck = false;
+        this.selectNb = 0;
+        this.selectedCards = [];
+        this.editingDeck = false;
+    }
+  };
+
+  async delete(){
+    await this.cardServiceService.deleteDeck(this.selectedDeck.id);
+    this.decks = await this.cardServiceService.getDecks();
+    this.deleteDeck = false;
+    this.showDeck = false;
+  }
+
+  async FiltrageAllCards(){
+    console.log(this.selectedFiltreAllCards);
+    if(this.selectedFiltreAllCards === undefined){
+      this.AllCards = await this.cardServiceService.getFilteredCards(this.selectedFiltreAllCards);
+    } else {
+      if(this.selectedFiltreAllCards.length != 0){
+        this.AllCards = await this.cardServiceService.getFilteredCards(this.selectedFiltreAllCards);
+      }
+    }
+  }
+
+  close(){
+    this.infoCard = false;
+  }
+
+  handleDeckClickcard(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.infoCard = false;
+    }
+  };
+
+
+
+
+
+  
   afficherCarte(carte:InventoryOwnedCards){
     this.infoCard = true;
     console.log(this.infoCard)
@@ -60,7 +201,8 @@ export class DeckComponent implements OnInit {
     if(userId!=null){
       if(carte != null){
         await this.sellCard.sellCard(carte.id);
-        this.AllCards = await this.cardServiceService.getInventory()
+        this.decks = await this.cardServiceService.getDecks();
+        this.AllCards = await this.cardServiceService.getInventory();
         console.log('liste de carte apres la vente');
         console.log(this.AllCards);
         this.stopStealingMyMoney = false;
@@ -89,50 +231,6 @@ export class DeckComponent implements OnInit {
     };
   
     countdown();
-  
-}
-
-  async Filtrage(){
-
-    this.truecardlist = [];
-
-    console.log(this.selectedFiltre);
-    if(this.selectedFiltre === undefined){
-      this.truecardlist = await this.cardServiceService.getInventory();
-    } else {
-      if(this.selectedFiltre.length != 0){
-        this.cardList = await this.cardServiceService.getFilteredCards(this.selectedFiltre);
-        for (let index = 0; index < this.cardList.length; index++) {
-          for (let injex = 0; injex < this.mecards.length; injex++) {
-            if(this.cardList[index].id === this.mecards[injex].id){
-              this.truecardlist.push(this.cardList[index]);
-            }
-          }    
-        }
-        console.log(this.cardList);
-        console.log(this.truecardlist);
-      }
-    }
   }
 
-  async FiltrageAllCards(){
-    console.log(this.selectedFiltreAllCards);
-    if(this.selectedFiltreAllCards === undefined){
-      this.AllCards = await this.cardServiceService.getFilteredCards(this.selectedFiltreAllCards);
-    } else {
-      if(this.selectedFiltreAllCards.length != 0){
-        this.AllCards = await this.cardServiceService.getFilteredCards(this.selectedFiltreAllCards);
-      }
-    }
-  }
-
-  close(){
-    this.infoCard = false;
-  }
-
-  handleDeckClickcard(event: Event) {
-    if (event.target === event.currentTarget) {
-        this.infoCard = false;
-    }
-  };
 }

@@ -1,3 +1,97 @@
+<div class="deckSelect">
+  <h1>Choix de deck</h1>
+  <div class="deckList">
+    <div class="deckItem" *ngFor="let item of decks" (click)="showDeckContent(item.id)">
+      <p>{{item.name}}</p>
+      <div class="test1"></div>
+      <div class="test2"></div>
+      <div class="test3"></div>
+    </div>
+    <button class="btn" (click)="newDeck = true"><p>&#43;</p></button>
+  </div>
+
+
+  <div *ngIf="showDeck" class="deckContent" (click)="handleDeckClick($event)">
+    <div class="content">
+      <div class="close" (click)="showDeck = false; editingDeck = false">X</div>
+      <p class="title">{{selectedDeck.name}}</p>
+      <div (click)="editDeck()" class="editBtn"><i class="fas fa-pen"></i></div>
+      <div class="test">
+        <div class="cardlist" *ngIf="!editingDeck">
+          <div *ngFor="let item of selectedDeck.cards">
+            <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [name]="item.card.name"></app-card>
+            
+          </div> 
+        </div>
+        <div class="cardListEdit" *ngIf="editingDeck">
+          <div *ngFor="let item of AllCards"
+               [ngClass]="{ 'selected': isSelected(item) }"
+               (click)="toggleSelection(item)">
+            <div class="card-wrapper">
+              <app-card style="color: black;"
+                        [attack]="item.card.attack"
+                        [defense]="item.card.defense"
+                        [imageUrl]="item.card.imageUrl"
+                        [health]="item.card.defense"
+                        [name]="item.card.name">
+              </app-card>
+              <div class="green-border" *ngIf="isSelected(item)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="enregistrer testBTN" (click)="saveDeck()" *ngIf="editingDeck" >Enregistrer le Deck</div>
+      <div class="delete testBTN" (click)="deleteDeck = true" *ngIf="!editingDeck" >Supprimer le Deck</div>
+      <div *ngIf="deleteDeck" class="deleteConfirm">
+        <div class="content">
+          <p>Êtes vous sur de vouloir delete ce deck?</p>
+          <div class="btns">
+            <a class="cancel" (click)="deleteDeck = false">Annuler</a>
+            <a class="delete" (click)="delete()">Supprimer le Deck</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="newDeck" *ngIf="newDeck" (click)="handleDeckClick($event)">
+    <div class="content">
+      <div class="close" (click)="closeNewDeck()">X</div>
+      <p class="title">Créer un nouveau Deck</p>
+      <div class="form">
+        <div>
+          <mat-form-field style="width: 100%">
+            <input matInput type="text" placeholder="Nom du Deck" id="deckName" name="deckName" [(ngModel)]="deckName">
+          </mat-form-field>
+          
+        </div>
+        <p class="selectNb"><span [ngStyle]="{ color: selectNb == 10 ? 'rgb(0, 211, 0)' : 'white' }">{{selectedCards.length}}</span> / 10</p>
+      </div>
+      <div class="cardSelect">
+        <div class="cardList">
+          <div *ngFor="let item of AllCards"
+               [ngClass]="{ 'selected': isSelected(item) }"
+               (click)="toggleSelection(item)">
+            <div class="card-wrapper">
+              <app-card style="color: black;"
+                        [attack]="item.card.attack"
+                        [defense]="item.card.defense"
+                        [imageUrl]="item.card.imageUrl"
+                        [health]="item.card.defense"
+                        [name]="item.card.name">
+              </app-card>
+              <div class="green-border" *ngIf="isSelected(item)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="newDeckBtn" (click)="addDeck()">
+        Créer le Deck
+      </div>
+    </div>
+  </div>
+</div>
 <div class="argent">
   <div class="argent-background">
     <h1 class="argent-nombre countdown-value" *ngIf="stopStealingMyMoney === true; else noMoney">
@@ -12,20 +106,7 @@
       </div>
     </ng-template>
   </div>
-</div>  
-<div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Mon Deck</h1></div>
-<div style="padding: 20px; background-color: black;">
-    <mat-form-field>
-      <mat-label>Select an option</mat-label>
-      <mat-select [(value)]="selectedFiltre">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let f of lesFiltres" [value]="f">{{f}}</mat-option>
-      </mat-select>
-      </mat-form-field>
-
-      <button mat-button (click)="Filtrage()">Filter</button>
 </div>
-
 <div style="padding: 20px; background-color: black;"><h1 style="font-weight: bold;">Inventaire</h1></div>
 <div style="padding: 20px; background-color: black;">
   <mat-form-field>
@@ -44,7 +125,7 @@
 </div>
 
 <div *ngIf="infoCard === true && infoUneCarte">
-  <div class="newDeck" (click)="handleDeckClickcard($event)">
+  <div class="afficherCarte" (click)="handleDeckClickcard($event)">
     <div class="content">
       <h1 class="titre">{{infoUneCarte.card.name}}</h1>
       <app-card style="color: black;" class="cardStyle" [attack]="infoUneCarte.card.attack" [defense]="infoUneCarte.card.defense" [imageUrl]="infoUneCarte.card.imageUrl" [health]="infoUneCarte.card.defense" [name]="infoUneCarte.card.name"></app-card>

@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { InventoryOwnedCards } from '../Models/inventoryCards';
+import { Deck } from '../Models/Deck';
+import { DeckDTO } from '../Models/DeckDTO';
+import { EditDeckDTO } from '../Models/EditDeckDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +14,7 @@ import { InventoryOwnedCards } from '../Models/inventoryCards';
 export class CardServiceService {
 
   AllCards : InventoryOwnedCards[] = [];
+  decks : Deck[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
 
@@ -23,22 +27,44 @@ export class CardServiceService {
   currentGravetard : any[] = [];
   enemyGraveYard : any[] = [];
 
-
   clickedCard : any;
 
   animateCardId : number = 0;
 
 constructor(public http : HttpClient) { }
 
-  async getdeck()
+
+  async newDeck(nameInput : string, cardsInput : number[]){ 
+    let deck = new DeckDTO(
+      nameInput,
+      cardsInput
+    );
+
+    let x = await lastValueFrom(this.http.post<DeckDTO>(environment.apiUrl+'api/Deck/CreateDeck', deck));
+    console.log("New deck:");
+    console.log(x);
+  }
+
+  async editDeck(name : string, cardsInput : InventoryOwnedCards[], id : number){
+    let editDeck = new EditDeckDTO(
+      name,
+      cardsInput
+    );
+
+    let x = await lastValueFrom(this.http.put<EditDeckDTO>(environment.apiUrl+'api/Deck/EditDeck/' + id, editDeck));
+    console.log("Edit deck:");
+    console.log(x);
+  }
+
+  async getDecks()
   {
     let options = { withCredentials : true }
 
-    let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl  +"api/Deck/GetPlayerDeck"));
+    let x = await lastValueFrom(this.http.get<Deck[]>(environment.apiUrl  +"api/Deck/GetDecks"));
+    console.log("Get decks:");
     console.log(x);
-    this.cardList = x;
-    console.log(this.cardList)
-    return this.cardList;
+    this.decks = x;
+    return x;
   }
 
   async getInventory(){
@@ -50,6 +76,11 @@ constructor(public http : HttpClient) { }
     console.log('En dessous c est la liste de carte que nous avons remplie');
     console.log(this.AllCards);
     return this.AllCards;
+  }
+
+  async deleteDeck(deckId : number){
+    let x = await lastValueFrom(this.http.delete<number>(environment.apiUrl + "api/Deck/DeleteDeck/" + deckId))
+    console.log(x);
   }
 
   async getFilteredCards(filtrechoisi : string){
