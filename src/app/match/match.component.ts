@@ -86,7 +86,7 @@ connecttoHub(){
     .then(() => {
       console.log('La connexion est live!');
 
-      this.hubConnection!.on('JoinMatch', (data) => {
+      this.hubConnection!.on('NeedUpdateMatch', (data) => {
         console.log(data);
       });
     })
@@ -110,7 +110,7 @@ async Surrender(){
 }
 //
 
-  //Le shit a changé
+  //Update Le Match au besoin
   async updateMatch(){
     var result;
     if(match.match.id != undefined){
@@ -121,11 +121,6 @@ async Surrender(){
       await this.processEvents(JSON.parse(result));
       this.updateTurn();
       this.updateMatch();
-    }else{
-      console.log("updating...")
-      setTimeout(() => {
-        this.updateMatch();
-      }, 100);
     }
   }
 
