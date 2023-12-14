@@ -17,7 +17,7 @@ import { DeckComponent } from './deck/deck.component';
 import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
 import { StoreComponent } from './store/store/store.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import {} from '@microsoft/signalr';
 
 @NgModule({
   declarations: [	
@@ -40,6 +40,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
+    
   ],
   providers: [
     {

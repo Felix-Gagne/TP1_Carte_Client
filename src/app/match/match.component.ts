@@ -6,6 +6,7 @@ import { EMPTY_SUBSCRIPTION } from 'rxjs/internal/Subscription';
 import { JsonPipe } from '@angular/common';
 import { CardDTO } from '../Models/CardDTO';
 import { timer } from 'rxjs';
+import * as signalR from '@microsoft/signalr';
 
 const match = JSON.parse(localStorage.getItem("match") || '{}');
 
@@ -22,6 +23,7 @@ export class MatchComponent implements OnInit {
   currentName:string = "";
   enemyName:string = "";
   cardDrew:number = 0;
+  private hubConnection?: signalR.HubConnection;
 
   //Boolean pour activer les animations des events
   isCurrentTurn:boolean = false;
@@ -35,15 +37,12 @@ export class MatchComponent implements OnInit {
 
 
   async ngOnInit() {
-
+    //Get PlayerID
     this.route.paramMap.subscribe(params => {
       this.playerId = Number(params.get('playerid'));
   });
 
-    this.route.paramMap.subscribe(params => {
-      const result = params.get('result');
-  });
-
+  //Voir Who starts
   if(this.playerId == match.playerA.id){
     this.currentName = match.playerA.name;
     this.enemyName = match.playerB.name;
@@ -52,21 +51,66 @@ export class MatchComponent implements OnInit {
     this.enemyName = match.playerA.name;
   }
 
+  //Variable qui contient le Id
   this.currentUserId = localStorage.getItem("userId")!;
+
+  //
+  //Console Logs
+  //
   console.log(this.playerId);
   console.log(match);
+  //
+  //
+  //
+
+  //Connection au Hub
+  this.connecttoHub();
+
+  //Join et Start Match
   await this.startMatch();
+
+  //Obtenir les Cartes dans les decks
   this.getCards();
-  this.updateMatch();
 }
 
-  async startMatch(){
-    if(this.currentUserId == match.match.userBId){
-          await this.service.startMatch(match.match.id);
-    };
-    this.updateTurn();
-  }
+/// Summary
+/// ========
+/// Méthode qui fait la connection Client-Serveur
+connecttoHub(){
+  this.hubConnection = new signalR.HubConnectionBuilder()
+  .withUrl('https://localhost:7289/matchHub')
+  .build();
 
+  this.hubConnection
+    .start()
+    .then(() => {
+      console.log('La connexion est live!');
+
+      this.hubConnection!.on('JoinMatch', (data) => {
+        console.log(data);
+      });
+    })
+    .catch(err => console.log('Error while starting connection: ' + err))
+}
+/// Fin de la Méthode
+///
+
+// Création du Match
+async startMatch(){
+  this.updateTurn();
+}
+//
+
+
+// Méthode Surrender
+async Surrender(){
+  await this.hubConnection!.invoke('Surrender', match.match.id);
+
+  await this.endMatch();
+}
+//
+
+  //Le shit a changé
   async updateMatch(){
     var result;
     if(match.match.id != undefined){
@@ -87,7 +131,7 @@ export class MatchComponent implements OnInit {
 
 
   async endMatch(){
-    await this.service.endMatch(match.match.id);
+    await this.hubConnection!.invoke('EndMatch', match.match.id);
   }
 
   updateTurn(){
@@ -114,7 +158,7 @@ export class MatchComponent implements OnInit {
       match.match.playerDataA.cardsPile.splice();
 
       if(cardId != undefined){
-        let result = await this.service.playCard(match.match.id, cardId?.id);
+        let result = await this.hubConnection!.invoke(match.match.id, cardId?.id);
         this.processEvents(result);
       }
 
@@ -133,10 +177,8 @@ export class MatchComponent implements OnInit {
     await this.serviceCard.getInventory();
   }
 
-  toggleAnim() {
-    this.matchStartAnim = !this.matchStartAnim
-  }
 
+  //La Méthode qui gère les Events
   async processEvents(event : any){
     if(event.$type == "StartMatch"){
       console.log("Event: StartMatch");
@@ -176,13 +218,6 @@ export class MatchComponent implements OnInit {
     }
   }
 
-  async StartMatchEvent(){
-    this.matchStartAnim = true;
-    setTimeout(() => {
-      this.matchStartAnim = false;
-    }, 3000);
-  }
-
   DrawCardCurrent(cardId : number){
     var card = this.serviceCard.playableCards.find((card : any) => card.id == cardId);
     console.log(card);
@@ -196,6 +231,20 @@ export class MatchComponent implements OnInit {
     console.log(card);
     this.serviceCard.enemyHand.push(card!.card);
     this._drawCard = true;
+  }
+
+  // Animation du StartMatch
+  async StartMatchEvent(){
+    this.matchStartAnim = true;
+    setTimeout(() => {
+      this.matchStartAnim = false;
+    }, 3000);
+  }
+  //
+
+  // Plus de Méthode Animations
+  toggleAnim() {
+    this.matchStartAnim = !this.matchStartAnim
   }
 
   delay(ms: number) {
