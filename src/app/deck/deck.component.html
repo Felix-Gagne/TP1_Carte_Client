@@ -19,7 +19,7 @@
       <div class="test">
         <div class="cardlist" *ngIf="!editingDeck">
           <div *ngFor="let item of selectedDeck.cards">
-            <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [name]="item.card.name"></app-card>
+            <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [rarity]="item.card.rarity" [name]="item.card.name"></app-card>
             
           </div> 
         </div>
@@ -33,6 +33,7 @@
                         [defense]="item.card.defense"
                         [imageUrl]="item.card.imageUrl"
                         [health]="item.card.defense"
+                        [rarity]="item.card.rarity"
                         [name]="item.card.name">
               </app-card>
               <div class="green-border" *ngIf="isSelected(item)"></div>
@@ -79,6 +80,7 @@
                         [defense]="item.card.defense"
                         [imageUrl]="item.card.imageUrl"
                         [health]="item.card.defense"
+                        [rarity]="item.card.rarity"
                         [name]="item.card.name">
               </app-card>
               <div class="green-border" *ngIf="isSelected(item)"></div>
@@ -121,14 +123,14 @@
 </div>
 
 <div style="display: inline-flex; padding: 10px;" *ngFor="let item of AllCards">
-  <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [name]="item.card.name" (click)="afficherCarte(item)"></app-card>
+  <app-card style="color: black;" [attack]="item.card.attack" [defense]="item.card.defense" [imageUrl]="item.card.imageUrl" [health]="item.card.defense" [name]="item.card.name" [rarity]="item.card.rarity" (click)="afficherCarte(item)"></app-card>
 </div>
 
 <div *ngIf="infoCard === true && infoUneCarte">
   <div class="afficherCarte" (click)="handleDeckClickcard($event)">
     <div class="content">
       <h1 class="titre">{{infoUneCarte.card.name}}</h1>
-      <app-card style="color: black;" class="cardStyle" [attack]="infoUneCarte.card.attack" [defense]="infoUneCarte.card.defense" [imageUrl]="infoUneCarte.card.imageUrl" [health]="infoUneCarte.card.defense" [name]="infoUneCarte.card.name"></app-card>
+      <app-card style="color: black;" class="cardStyle" [attack]="infoUneCarte.card.attack" [defense]="infoUneCarte.card.defense" [imageUrl]="infoUneCarte.card.imageUrl" [health]="infoUneCarte.card.defense" [rarity]="infoUneCarte.card.rarity" [name]="infoUneCarte.card.name"></app-card>
       <div class="boutonEspacement">
         <button  class="boutonPersonaliser" (click)="vendreCarte(infoUneCarte)">
           Vendre
