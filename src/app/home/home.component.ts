@@ -3,6 +3,7 @@ import { UserServicesService } from '../services/user-services.service';
 import { HttpClient } from '@angular/common/http';
 import { MatchServicesService } from '../services/match-services.service';
 import { Router, RouterModule } from '@angular/router';
+import * as signalR from '@microsoft/signalr';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   isLoading : boolean = false;
   userIsConnected : boolean = false;
   balance : number = 0;
+  private hubConnection?: signalR.HubConnection;
 
   catcard = {
     name: "Chat Jedi",
@@ -28,9 +30,29 @@ export class HomeComponent implements OnInit {
     var user = localStorage.getItem("userId");
     console.log('Ce user est connecter :' + user);
     if(user != null){
+      this.connecttoHub();
       this.balance = await this.userService.getMoney();
     }
   }
+
+  connecttoHub(){
+    this.hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl('https://localhost:7289/matchHub')
+    .build();
+  
+    this.hubConnection
+      .start()
+      .then(() => {
+        console.log('La connexion est live!');
+  
+        this.hubConnection!.on('ReceiveJoinMatchValue', (data) => {
+          this.isLoading = false;
+        });
+      })
+      .catch(err => console.log('Error while starting connection: ' + err))
+  }
+
+  
 
   async join()
   {
@@ -41,7 +63,7 @@ export class HomeComponent implements OnInit {
         break;
       }
 
-      const result = await this.matchService.joinMatch();
+      const result = await this.hubConnection!.invoke('JoinMatch');
       const userId = localStorage.getItem("userId");
       let playerId = 0;
 
@@ -60,10 +82,12 @@ export class HomeComponent implements OnInit {
         break;
       }
 
-      await new Promise(resolve => setTimeout(resolve, 500));
     }
   }
 
+  async CancelQueue(){
+    await this.hubConnection!.invoke('CancelQueue');
+  }
   
   async signOut(){
     try{
