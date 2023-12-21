@@ -47,12 +47,33 @@
       </ul>
     </div>
 
-    <div *ngIf="packs">
+    <div *ngIf="packs" class="packs">
       <h1 style="text-align: center">Buy Card Packs</h1>
+
+      <div class="packList">
+        <div class="packItem" *ngFor="let item of packList" (click)="BuyPack(item.id)">
+          <p>{{item.name}}</p>
+          <p>{{item.price}}</p>
+        </div>
+      </div>
+      <div *ngIf="ShowingCards" class="showCards" (click)="handleDeckClick($event)">
+        <div class="content">
+          <div class="close" (click)="ShowingCards = false; cardList = []">X</div>
+          <div class="cardlist">
+            <div *ngFor="let item of cardList">
+              <app-card style="color: black;" [attack]="item.attack" [defense]="item.defense" [imageUrl]="item.imageUrl" [health]="item.defense" [rarity]="item.rarity" [name]="item.name"></app-card>
+              
+            </div> 
+          </div>
+        </div>
+      </div>
     </div>
     
     <div *ngIf="cases">
       <h1 style="text-align: center">Open Cases</h1>
+    </div>
+    <div class="buypackbtn" (click)="BuyPack(1)">
+      Buy test pack 
     </div>
   </div>
 </div>

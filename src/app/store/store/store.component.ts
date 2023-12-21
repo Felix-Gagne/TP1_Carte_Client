@@ -4,6 +4,8 @@ import { StoreCards } from 'src/app/Models/StoreCards';  // Import the StoreCard
 import { UserServicesService } from 'src/app/services/user-services.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, map, take, timer } from 'rxjs';
+import { Pack } from 'src/app/Models/Pack';
+import { CardDTO } from 'src/app/Models/CardDTO';
 
 @Component({
   selector: 'app-store',
@@ -21,17 +23,19 @@ export class StoreComponent implements OnInit {
   packs : boolean = false;
   cases : boolean = false;
 
+  ShowingCards : boolean = false;
+  packList : Pack[] = [];
+  cardList : CardDTO[] = [];
+
   cardBought = false;
   stopStealingMyMoney = true;
-
-
-
 
   
   constructor(public storeService: StoreService, public userService:UserServicesService, private snackBar: MatSnackBar) {}
 
   async ngOnInit() {
     this.storeCardsList = await this.storeService.getBuyableCards();
+    this.packList = await this.storeService.GetPacks();
     this.money = await this.userService.getMoney();
     this.newMoney = await this.userService.getMoney();
   }
@@ -102,5 +106,19 @@ export class StoreComponent implements OnInit {
     });
   }
 
+
+
+  async BuyPack(packId : number){
+    //console.log(this.packList);
+    this.cardList = await this.storeService.BuyPack(packId);
+    this.ShowingCards = true;
+  }
+
+  handleDeckClick(event: Event) {
+    if (event.target === event.currentTarget) {
+        this.ShowingCards = false;
+        this.cardList = [];
+    }
+  };
 
 }
