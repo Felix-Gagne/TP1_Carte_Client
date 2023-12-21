@@ -87,7 +87,8 @@ connecttoHub(){
       console.log('La connexion est live!');
 
       this.hubConnection!.on('NeedUpdateMatch', (data) => {
-        console.log(data);
+        match.match = data;
+        this.updateMatch();
       });
     })
     .catch(err => console.log('Error while starting connection: ' + err))
