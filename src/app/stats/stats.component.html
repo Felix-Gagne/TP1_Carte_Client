@@ -7,7 +7,7 @@
         <mat-label>Select an option</mat-label>
         <mat-select [(value)]="selectedDeck">
           <mat-option>None</mat-option>
-          <mat-option *ngFor="let d of deckList" [value]="d">{{d}}</mat-option>
+          <mat-option *ngFor="let d of deckList" [value]="d.name">{{d.name}}</mat-option>
         </mat-select>
     </mat-form-field>
     
