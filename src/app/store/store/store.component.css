@@ -131,11 +131,15 @@ ul.horizontal-list li {
   text-transform: capitalize;
   margin-bottom: 40px;
   .packItem{
-      width: 120px;
-      height: 180px;
-      cursor: pointer;
+      width: 250px;
+      height: 300px;
       position: relative;
-      background-color: blue;
+      background-size: 100% 100%;
+      
+      img {
+        background: none;
+    }
+    
   }
 }
 
@@ -152,8 +156,8 @@ ul.horizontal-list li {
   background-color: rgba(0, 0, 0, 0.7);
 
   .content{
-    width: 80%;
-    height: 55%;
+    width: auto;
+    height: auto;
     padding: 20px;
     padding-top: 60px;
     background-color: #696969;

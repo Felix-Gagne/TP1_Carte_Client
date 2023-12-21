@@ -5,7 +5,7 @@ export class Pack{
         public id : number,
         public name : string,
         public price : number,
-        public imageUrl : string,
+        public imageURL : string,
         public nbCards : number,
         public baseRarity : Rarity){}
 }

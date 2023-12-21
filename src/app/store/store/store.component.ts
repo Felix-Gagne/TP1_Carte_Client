@@ -19,6 +19,8 @@ export class StoreComponent implements OnInit {
   newMoney: number = 0; // Add the newMoney variable
   selectedCard? : StoreCards;
 
+  decreaseAmount : number =0;
+
   cards : boolean = true;
   packs : boolean = false;
   cases : boolean = false;
@@ -109,9 +111,16 @@ export class StoreComponent implements OnInit {
 
 
   async BuyPack(packId : number){
-    //console.log(this.packList);
-    this.cardList = await this.storeService.BuyPack(packId);
-    this.ShowingCards = true;
+    if(this.money >= this.decreaseAmount){
+      this.cardList = await this.storeService.BuyPack(packId);
+      this.money = await this.userService.getMoney();
+            this.stopStealingMyMoney = false;
+            this.startCountdown();
+      this.ShowingCards = true;
+    }else{
+      console.log('pauvre')
+      this.showSnackbar('You dont have enough money to buy this pack. Please recharge money to process!')
+    }
   }
 
   handleDeckClick(event: Event) {
