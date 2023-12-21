@@ -13,3 +13,12 @@
     
     <button style="display: inline-block; background-color: #69f0ae; color: black; margin-left: 10px;" mat-button (click)="getDeckStats()">Stats du deck</button>
 </div>
+
+<div style="margin-left: 10px; padding-left: 20px; display: flex;">
+    <h3 style="color: white;">Nombre de victoires : </h3>
+    <h3 style="margin-left: 10px; margin-top: 1px; color: green;">{{stats?.wins}}</h3>
+</div>
+<div style="margin-left: 10px; padding-left: 20px; display: flex;" *ngIf="stats">
+    <h3 style="color: white;">Nombre de défaites : </h3>
+    <h3 style="margin-left: 10px; margin-top: 1px; color: red;">{{stats?.loses}}</h3>
+</div>
