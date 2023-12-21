@@ -1,0 +1,15 @@
+<div style="display: inline-flex; margin-left: 10px; padding: 20px;">
+    <button mat-raised-button [routerLink]="['/']" color="accent">Back to home</button>
+</div>
+
+<div style="display: flex; margin-left: 10px; padding: 20px;">
+    <mat-form-field>
+        <mat-label>Select an option</mat-label>
+        <mat-select [(value)]="selectedDeck">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let d of deckList" [value]="d">{{d}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <button style="display: inline-block; background-color: #69f0ae; color: black; margin-left: 10px;" mat-button (click)="getDeckStats()">Stats du deck</button>
+</div>

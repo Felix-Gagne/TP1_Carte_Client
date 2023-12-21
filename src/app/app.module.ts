@@ -18,6 +18,7 @@ import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
 import { StoreComponent } from './store/store/store.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {} from '@microsoft/signalr';
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [	
@@ -29,6 +30,7 @@ import {} from '@microsoft/signalr';
     HomeComponent,
       DeckComponent,
       StoreComponent,
+      StatsComponent,
       
    ],
   imports: [

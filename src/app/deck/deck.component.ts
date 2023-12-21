@@ -84,6 +84,7 @@ export class DeckComponent implements OnInit {
     })
     console.log(this.editingDeck);
   }
+  
   saveDeck(){
     this.editingDeck = false;
     this.showDeck = false;
