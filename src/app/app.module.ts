@@ -17,6 +17,9 @@ import { DeckComponent } from './deck/deck.component';
 import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
 import { StoreComponent } from './store/store/store.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {} from '@microsoft/signalr';
+import { StatsComponent } from './stats/stats.component';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { SlotDialogComponent } from './slot-dialog/slot-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {} from '@microsoft/signalr';
@@ -31,6 +34,7 @@ import {} from '@microsoft/signalr';
     HomeComponent,
       DeckComponent,
       StoreComponent,
+      StatsComponent,
       SlotDialogComponent,
       
    ],
@@ -43,7 +47,8 @@ import {} from '@microsoft/signalr';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    CanvasJSAngularChartsModule
   ],
   providers: [
     {

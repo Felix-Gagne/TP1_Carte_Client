@@ -6,6 +6,7 @@ import { RegisterComponent } from './authentification/register/register.componen
 import { MatchComponent } from './match/match.component';
 import { HomeComponent } from './home/home.component';
 import { StoreComponent } from './store/store/store.component';
+import { StatsComponent } from './stats/stats.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'store', component: StoreComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'match/:playerid', component: MatchComponent},
   { path: 'deck', component: DeckComponent },
   { path: '', component: HomeComponent },
+  { path: 'stats', component: StatsComponent},
   { path: '**', redirectTo: '/'}
 ];
 
