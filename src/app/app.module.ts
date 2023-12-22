@@ -20,6 +20,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {} from '@microsoft/signalr';
 import { StatsComponent } from './stats/stats.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { SlotDialogComponent } from './slot-dialog/slot-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [	
@@ -32,6 +34,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
       DeckComponent,
       StoreComponent,
       StatsComponent,
+      SlotDialogComponent,
       
    ],
   imports: [
@@ -43,6 +46,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatDialogModule
     CanvasJSAngularChartsModule
   ],
   providers: [

@@ -1,6 +1,13 @@
+<div class="btnSelect">
+  <div (click)="selectStore(1)" class="select" [ngClass]="{'btnSelected': cards, 'select': !cards}">Cards</div>
+  <div (click)="selectStore(2)" class="select" [ngClass]="{'btnSelected': packs, 'select': !packs}">Packs</div>
+  <div (click)="selectStore(3)" class="select" [ngClass]="{'btnSelected': cases, 'select': !cases}">Cases</div>
+</div>
 
 <div>
   <div class="background">
+    <div>
+    </div>
     <div class="argent">
       <div class="argent-background">
         <h1 class="argent-nombre countdown-value" *ngIf="stopStealingMyMoney === true; else noMoney">
@@ -11,13 +18,15 @@
           {{newMoney}}$
           </h1>
           <div class="minus">
-            - {{selectedCard?.buyAmount}} $
+            - {{decreaseAmount}} $
           </div>
         </ng-template>
       </div>
-    </div>  
-    <h1 style="text-align: center">New cards</h1>
-    <div style="text-align: center">
+    </div>
+
+    
+    <div *ngIf="cards" style="text-align: center">
+      <h1 style="text-align: center">Buy cards</h1>
       <ul class="horizontal-list">
         <li *ngFor="let card of storeCardsList">
             <div style="display: inline-flex; padding: 10px; flex-direction: column;">
@@ -29,13 +38,31 @@
                 [health]="card.card.defense"
                 [name]="card.card.name"
               ></app-card>
-              <button class="btn" (click)="buyCard(card.id)">
+              <button class="btn" (click)="buyCard(card.id); decreaseAmount = card.buyAmount">
                 Acheter pour {{card.buyAmount}}
               </button>
               <span style="margin-left: 10px;"></span>
             </div>
         </li>
       </ul>
+    </div>
+
+    <div *ngIf="packs" class="packs">
+      <h1 style="text-align: center">Buy Card Packs</h1>
+
+      <div class="packList">
+        <div *ngFor="let item of packList" >
+          <div class="packItem" [style.background-image]="'url(' + item.imageURL + ')'">
+          </div>
+          <button class="btn" (click)="decreaseAmount = item.price; BuyPack(item.id)">
+            Acheter pour {{item.price}}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="cases">
+      <h1 style="text-align: center">Open Cases</h1>
     </div>
   </div>
 </div>
