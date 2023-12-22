@@ -17,6 +17,8 @@ import { DeckComponent } from './deck/deck.component';
 import { CookieInterceptorInterceptor } from './cookie-interceptor.interceptor';
 import { StoreComponent } from './store/store/store.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SlotDialogComponent } from './slot-dialog/slot-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import {} from '@microsoft/signalr';
 
 @NgModule({
@@ -29,6 +31,7 @@ import {} from '@microsoft/signalr';
     HomeComponent,
       DeckComponent,
       StoreComponent,
+      SlotDialogComponent,
       
    ],
   imports: [
@@ -40,7 +43,7 @@ import {} from '@microsoft/signalr';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
-    
+    MatDialogModule
   ],
   providers: [
     {

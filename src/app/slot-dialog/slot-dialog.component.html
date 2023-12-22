@@ -1,0 +1,83 @@
+<div class="box popUp">
+    You've Won These Cards!
+</div>
+<div class="outside">
+    <ul class="wire wiretop">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul class="wire wirebottom">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul class="wire wireleft">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul class="wire wireright">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="dialog" #dialogContent>
+        <div class="slotList" *ngFor="let slot of data.allSlots | slice:0:data.totalSlots">
+            <div class="slot">
+            <div class="cardList" *ngFor="let slotCard of slot">
+                <app-card
+                style="color: black;"
+                [attack]="slotCard.attack"
+                [defense]="slotCard.defense"
+                [imageUrl]="slotCard.imageUrl"
+                [health]="slotCard.defense"
+                [name]="slotCard.name"
+                [rarity]="slotCard.rarity">
+            </app-card>
+            </div>
+            </div>
+        </div> 
+        </div>
+</div>
+
+<div class="box popDown" (click)="this.dialogRef.close();">Get My Cards</div>
