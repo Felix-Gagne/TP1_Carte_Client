@@ -46,7 +46,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
     CanvasJSAngularChartsModule
   ],
   providers: [

@@ -38,10 +38,10 @@ export class StatsComponent {
 		indexLabel: "{name}: {y}",
 		yValueFormatString: "####",
 		dataPoints: [
-		  { y: 12, name: "Commune" },
-		  { y: 6, name: "Rare" },
-		  { y: 3, name: "Épique" },
-		  { y: 1, name: "Légendaire" }
+		  { y: 0, name: "Commune" },
+		  { y: 0, name: "Rare" },
+		  { y: 0, name: "Épique" },
+		  { y: 0, name: "Légendaire" }
 		]
 	  }]
 	}	
@@ -183,9 +183,14 @@ export class StatsComponent {
 
       //Compter le mana et populer la chart
       const manaCost = this.countMana(this.stats);
-      console.log(manaCost);
       this.BarChart.data[0].dataPoints.forEach((dataPoint, index)=> {
         dataPoint.y = manaCost[index];
+      })
+
+      //Compter la rarity et populer la chart
+      const rarityCounts = this.countRarity(this.stats);
+      this.PieChart.data[0].dataPoints.forEach((dataPoint, index)=> {
+        dataPoint.y = rarityCounts[index];
       })
 
       this.dataLoaded = true;
@@ -223,6 +228,19 @@ export class StatsComponent {
     return defenseCounts;
   }
 
+  countRarity(stats:StatsDTO){
+    const rarityCounts = Array(4).fill(0);
+
+    for(let c of stats.cards){
+      const rarityValue = c.rarity;
+      if(rarityValue >= 0 && rarityValue <= 3){
+        rarityCounts[rarityValue]++;
+      }
+    }
+
+    return rarityCounts;
+  }
+
   countMana(stats:StatsDTO){
     const manaCounts = Array(20).fill(0);
 
@@ -257,9 +275,14 @@ export class StatsComponent {
 
     //Compter le mana et populer la chart
     const manaCost = this.countMana(this.stats);
-    console.log(manaCost);
     this.BarChart.data[0].dataPoints.forEach((dataPoint, index)=> {
       dataPoint.y = manaCost[index];
+    })
+
+    //Compter la rarity et populer la chart
+    const rarityCounts = this.countRarity(this.stats);
+    this.PieChart.data[0].dataPoints.forEach((dataPoint, index)=> {
+      dataPoint.y = rarityCounts[index];
     })
 
     this.dataLoaded = true;
