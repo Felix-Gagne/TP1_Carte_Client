@@ -17,6 +17,8 @@ export class SlotDialogComponent implements AfterViewInit {
     public dialogRef: MatDialogRef<SlotDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
+    lightVisibility = false;
+    
   onClose(): void {
     this.dialogRef.close();
   }

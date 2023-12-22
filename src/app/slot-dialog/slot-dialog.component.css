@@ -8,8 +8,8 @@
   width: auto;
   height: 400px;
   background-color: black;
-  animation: flashingLights 1s ease-in-out 5s infinite;
-  border: 5px solid blue;
+  border: 5px solid rgb(105, 67, 23);
+  z-index: 10;
 }
 
 .dialog{
@@ -43,46 +43,50 @@
 }
 
 .box {
-  position: absolute;
+  position: fixed;
   left: 50%;
-  transform: translateX(-50%);
   width: 200px;
-  padding: 10px;
   background-color: #f0f0f0;
   text-align: center;
-  z-index: 100;
+  z-index: -1;
+  width: auto;
+}
+
+.flashing {
+  animation: flashingLights 1s ease-in-out 5s infinite;
 }
 
 .popUp{
+  top: 30%;
+  transform: translate(-50%, 0%);
   background-color: green;
-  top: 0; /* Position at the top of the parent */
-  transform: translate(-50%, -100%); /* Hide above the parent */
   animation: slideFromTop 1s ease forwards 5s;
+  font-size: 3rem;
+  border-radius: 5px;
+  padding: 30px;
 }
 
 .popDown{
+  bottom: 30%;
   background-color: green;
-  bottom: 0; /* Position at the bottom of the parent */
-  transform: translate(-50%, 100%); /* Hide below the parent */
   animation: slideFromBottom 1s ease forwards 5s;
   cursor: pointer;
   border-radius: 5px;
+  transform: translate(-50%, 0%);
+  padding: 20px;
+  font-size: 2.1rem;
 }
 
-.common{
-  overflow: hidden;
-  position: relative;
-}
 
 @keyframes slideFromTop {
   to {
-    transform: translate(-50%, 0); /* Slide to just inside the parent's top edge */
+    transform: translate(-50%, -180%); /* Slide to just inside the parent's top edge */
   }
 }
 
 @keyframes slideFromBottom {
   to {
-    transform: translate(-50%, 0); /* Slide to just inside the parent's bottom edge */
+    transform: translate(-50%, 200%); /* Slide to just inside the parent's bottom edge */
   }
 }
 
@@ -95,13 +99,83 @@
   }
 }
 
-        
-@keyframes flashingLights {
-  0%, 100% { border-color: blue; }
-  25% { border-color: yellow; }
-  50% { border-color: red; }
-  75% { border-color: green; }
+.wire{
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  padding: 0;
+  width: 100%;
+  height: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.wire li{
+  background: rgba(255, 166, 0, 0.5);
+  box-shadow: 0px 2px 20px 4px rgba(255, 166, 0, 0.5);
+  position: relative;
+  list-style: none;
+  padding: 0;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 10px;
+  animation-name: even-flash;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  animation-delay: 4.5s;
+}
+
+.wire li:nth-child(odd) {
+  background: rgba(255, 251, 0, 0.5); /* Initial color for odd lights at 50% brightness */
+  box-shadow: 0px 2px 20px 4px rgba(255, 251, 0, 0.5); /* Initial shadow for odd lights */
+  animation-name: odd-flash;
+  animation-delay: 5s;
+}
+
+.wiretop{
+  top: -10px;
+}
+.wirebottom{
+  bottom: 30px;
 }
 
 
+.wireleft, .wireright{
+  flex-direction: column;
+  height: 80%;
+  width: 5px;
+  bottom: 40px;
+}
 
+.wireleft{
+  left: 11px;
+}
+
+.wireright{
+  right: 27.5px;
+}
+
+@keyframes even-flash {
+  50% {
+    background: rgb(255, 166, 0);
+    box-shadow: 0px 2px 20px 4px rgba(255, 166, 0);
+  }
+  0%, 100% {
+    background: rgba(255, 166, 0, 0.5);
+    box-shadow: 0px 2px 20px 4px rgba(255, 166, 0, 0.5);
+  }
+}
+
+@keyframes odd-flash {
+  50% {
+    background: rgb(255, 251, 0);
+    box-shadow: 0px 2px 20px 4px rgb(255, 251, 0);
+  }
+  0%, 100% {
+    background: rgba(255, 251, 0, 0.5);
+    box-shadow: 0px 2px 20px 4px rgba(255, 251, 0, 0.5);
+  }
+}
