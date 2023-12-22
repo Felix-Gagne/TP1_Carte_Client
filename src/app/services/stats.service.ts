@@ -16,7 +16,7 @@ export class StatsService {
 
   constructor(public http : HttpClient) { }
 
-  async GetGeneralStats(){
+  async GetGeneralStats(): Promise<StatsDTO>{
 
     let x = await lastValueFrom(this.http.get<StatsDTO>(environment.apiUrl + 'api/Stats/GetGeneralStats'));
 

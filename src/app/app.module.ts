@@ -19,6 +19,7 @@ import { StoreComponent } from './store/store/store.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {} from '@microsoft/signalr';
 import { StatsComponent } from './stats/stats.component';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 @NgModule({
   declarations: [	
@@ -42,7 +43,7 @@ import { StatsComponent } from './stats/stats.component';
     HttpClientModule,
     MatSelectModule,
     MatSnackBarModule,
-    
+    CanvasJSAngularChartsModule
   ],
   providers: [
     {
