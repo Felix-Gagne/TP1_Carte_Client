@@ -26,4 +26,19 @@ export class StatsService {
 
     return this.stats;
   }
+
+  async GetDeckStats(deckId:number){
+
+    if(deckId == undefined){
+      return this.GetGeneralStats();
+    }
+
+    let x = await lastValueFrom(this.http.get<StatsDTO>(environment.apiUrl + 'api/Stats/GetDeckStats/' + deckId));
+
+    console.log(x);
+
+    this.stats = x;
+
+    return this.stats;
+  }
 }

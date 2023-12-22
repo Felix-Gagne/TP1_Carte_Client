@@ -15,7 +15,7 @@ CanvasJS.addColorSet("ColumnChartColorSet", ["#1E62FF","#FF3D1E"]);
 })
 export class StatsComponent {
 
-  selectedDeck = "";
+  selectedDeck:number = 0;
   deckList : Deck[] = [];
   stats? : StatsDTO;
 
@@ -236,7 +236,32 @@ export class StatsComponent {
     return manaCounts;
   }
 
-  getDeckStats(){
+  async getDeckStats(){
+    console.log(this.selectedDeck);
 
+    this.dataLoaded = false;
+
+    this.stats = await this.statsService.GetDeckStats(this.selectedDeck);
+
+    //Compter les attaques et populer la chart
+    const attackCounts = this.countAttack(this.stats);
+    this.ColumnChart.data[0].dataPoints.forEach((dataPoint, index)=> {
+      dataPoint.y = attackCounts[index];
+    });
+
+    //Compter les defenses et populer la chart
+    const defenseCounts = this.countDefense(this.stats);
+    this.ColumnChart.data[1].dataPoints.forEach((dataPoint, index)=> {
+      dataPoint.y = defenseCounts[index];
+    });
+
+    //Compter le mana et populer la chart
+    const manaCost = this.countMana(this.stats);
+    console.log(manaCost);
+    this.BarChart.data[0].dataPoints.forEach((dataPoint, index)=> {
+      dataPoint.y = manaCost[index];
+    })
+
+    this.dataLoaded = true;
   }
 }
