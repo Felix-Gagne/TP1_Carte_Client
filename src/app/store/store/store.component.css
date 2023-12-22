@@ -157,13 +157,11 @@ ul.horizontal-list li {
 
   .content{
     width: auto;
-    height: auto;
+    height: 40%;
     padding: 20px;
     padding-top: 60px;
     background-color: #696969;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
     text-align: center;
     position: relative;
     justify-items: center;
@@ -175,7 +173,29 @@ ul.horizontal-list li {
       justify-content: center;
       gap: 30px;
       margin-bottom: 20px;
+    }
+
+    .slotList{
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+    
+    .slot{
+      overflow: hidden;
+      position: relative;
+      width: 250px;
+      animation: moveUp 5s ease-out;
+    }
   }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
   }
 }
 

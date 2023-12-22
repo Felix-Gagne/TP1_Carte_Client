@@ -1,0 +1,107 @@
+/* styles.css */
+
+.outside{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 400px;
+  background-color: black;
+  animation: flashingLights 1s ease-in-out 5s infinite;
+  border: 5px solid blue;
+}
+
+.dialog{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-height: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.cardlist{
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.slotList{
+  display: flex;
+  flex-direction: row;
+}
+
+.slot{
+  position: relative;
+  width: 250px;
+  animation: moveUp 5s ease-out;
+}
+
+.box {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  text-align: center;
+  z-index: 100;
+}
+
+.popUp{
+  background-color: green;
+  top: 0; /* Position at the top of the parent */
+  transform: translate(-50%, -100%); /* Hide above the parent */
+  animation: slideFromTop 1s ease forwards 5s;
+}
+
+.popDown{
+  background-color: green;
+  bottom: 0; /* Position at the bottom of the parent */
+  transform: translate(-50%, 100%); /* Hide below the parent */
+  animation: slideFromBottom 1s ease forwards 5s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.common{
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes slideFromTop {
+  to {
+    transform: translate(-50%, 0); /* Slide to just inside the parent's top edge */
+  }
+}
+
+@keyframes slideFromBottom {
+  to {
+    transform: translate(-50%, 0); /* Slide to just inside the parent's bottom edge */
+  }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+        
+@keyframes flashingLights {
+  0%, 100% { border-color: blue; }
+  25% { border-color: yellow; }
+  50% { border-color: red; }
+  75% { border-color: green; }
+}
+
+
+

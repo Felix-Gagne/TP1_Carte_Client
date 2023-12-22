@@ -13,7 +13,8 @@ import { EditDeckDTO } from '../Models/EditDeckDTO';
 })
 export class CardServiceService {
 
-  AllCards : InventoryOwnedCards[] = [];
+  AllCards : CardDTO[] = [];
+  Inventory : InventoryOwnedCards[] = [];
   decks : Deck[] = [];
   cardList : CardDTO[] = [];
   playableCards : any[] = [];
@@ -33,6 +34,12 @@ export class CardServiceService {
 
 constructor(public http : HttpClient) { }
 
+async GetAllCards(){
+  let x = await lastValueFrom(this.http.get<CardDTO[]>(environment.apiUrl+'api/Deck/GetAllCards'));
+  console.log(x);
+  this.AllCards = x;
+  return x;
+}
 
   async newDeck(nameInput : string, cardsInput : number[]){ 
     let deck = new DeckDTO(
@@ -72,10 +79,10 @@ constructor(public http : HttpClient) { }
     console.log('inventaire du joueur en dessous');
     console.log(x);
     
-    this.AllCards = x;    
+    this.Inventory = x;    
     console.log('En dessous c est la liste de carte que nous avons remplie');
-    console.log(this.AllCards);
-    return this.AllCards;
+    console.log(this.Inventory);
+    return this.Inventory;
   }
 
   async deleteDeck(deckId : number){
@@ -92,7 +99,7 @@ constructor(public http : HttpClient) { }
     let x = await lastValueFrom(this.http.get<InventoryOwnedCards[]>(environment.apiUrl  +"api/Deck/GetFilteredCards", {params: queryParams}));
     console.log(x);
 
-    this.AllCards = x;
-    return this.AllCards;
+    this.Inventory = x;
+    return this.Inventory;
   }
 }
